@@ -5,13 +5,13 @@ use crate::components::reminder_list::ReminderList;
 
 pub const LOCAL_STORAGE_KEY: &str = "reminderbox";
 
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, Eq, Default)]
 pub struct UserData {
     pub reminders_list: ReminderList,
 }
 
-impl Default for UserData {
-    fn default() -> Self {
+impl UserData {
+    pub fn new() -> Self {
         get_local_storage()
     }
 }

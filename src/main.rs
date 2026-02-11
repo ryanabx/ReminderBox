@@ -14,7 +14,7 @@ fn main() {
 #[component]
 fn App() -> impl IntoView {
     // The `user data` is a signal, since we need to reactively update the list
-    let (user_data, set_user_data) = signal(UserData::default());
+    let (user_data, set_user_data) = signal(UserData::new());
 
     // We provide a context that each <Todo/> component can use to update the list
     // Here, I'm just passing the `WriteSignal`; a <Todo/> doesn't need to read the whole list
