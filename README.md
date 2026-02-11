@@ -1,15 +1,17 @@
 # ReminderBox
 
-A WIP reminders app in your browser
+![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/ryanabx/ReminderBox/gh-pages-deploy.yml)
 
-## Testing
+## A (WIP) PWA reminders app in your browser!
 
-Install Trunk:
+ReminderBox is a reminders app I developed mainly for personal use, but since it's a web app, you can use it too! It's written with [Leptos](https://github.com/leptos-rs/leptos) because I wanted to use rust, and it's considered one of the best web frameworks in Rust!
 
-```sh
-cargo install trunk
-```
+## Reminders are stored locally
 
-```sh
-trunk serve --open
-```
+Since it's a single-page application that runs entirely on the client, it's explicitly a non-goal to have any sort of database or server in the stack. All reminders are stored on the [LocalStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage). This also means you shouldn't clear the website's local storage, or else you'll lose your reminders!
+
+In the future, I may implement a backup and restore option for reminders, just in case you frequently clear your website data.
+
+## For contributors
+
+See [CONTRIBUTING.md](./CONTRIBUTING.md) for more information on how to compile!
