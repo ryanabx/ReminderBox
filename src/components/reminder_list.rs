@@ -29,7 +29,7 @@ pub fn ReminderListWidget(
     let reminders = move || reminder_list().0;
 
     view! {
-        <div class="flex flex-col">
+        <div class="flex flex-col w-full max-w-xl overflow-y-auto">
             <p>"My Reminders:"</p>
             <NewReminderBox/>
             <ul class="space-y-2">
