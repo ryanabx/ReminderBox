@@ -29,10 +29,10 @@ pub fn ReminderListWidget(
     let reminders = move || reminder_list().0;
 
     view! {
-        <div>
+        <div class="flex flex-col">
             <p>"My Reminders:"</p>
             <NewReminderBox/>
-            <ul class="reminder-list">
+            <ul class="space-y-2">
                 <For each=reminders key=|reminder| reminder.id() let:reminder>
                     <ReminderWidget reminder/>
                 </For>

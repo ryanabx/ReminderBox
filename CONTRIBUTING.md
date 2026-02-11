@@ -29,3 +29,7 @@ trunk serve --open
 ```sh
 trunk build --release
 ```
+
+## TailwindCSS Setup
+
+See: https://github.com/leptos-rs/leptos/tree/main/examples/tailwind_csr
