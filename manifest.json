@@ -3,6 +3,7 @@
   "short_name": "ReminderBox",
   "description": "A reminders app for your browser",
   "start_url": "./",
+  "id": "./",
   "scope": "./",
   "display": "standalone",
   "background_color": "#ffffff",
