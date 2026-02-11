@@ -6,9 +6,25 @@
   <link data-trunk rel="copy-file" href="./icons/ReminderBox-192x192.png" />
   <link data-trunk rel="copy-file" href="./icons/ReminderBox-512x512.png" />
   <link data-trunk rel="copy-file" href="./manifest.json" />
+  <link data-trunk rel="copy-file" href="./sw.js" />
   <link rel="manifest" href="/manifest.json">
 </head>
 
-<body></body>
+<body>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+          .then(reg => {
+            console.log('Service Worker registered:', reg.scope);
+          })
+          .catch(err => {
+            console.error('SW registration failed:', err);
+          });
+      });
+    }
+  </script>
+
+</body>
 
 </html>
