@@ -28,14 +28,14 @@ pub fn ReminderWidget(reminder: Reminder) -> impl IntoView {
     let state_setter = use_context::<WriteSignal<UserData>>().expect("Could not find user data");
     view! {
         <div class="flex flex-row space-x-2 py-2">
-            <input type="checkbox" class="size-4" bind:checked=reminder.completed/>
-            <input type="text" class="grow py-1" placeholder="Enter a reminder..." bind:value=reminder.title />
+            <input type="checkbox" class="reminder-checkbox" bind:checked=reminder.completed/>
+            <input type="text" class="grow py-2 px-2" placeholder="Enter a reminder..." bind:value=reminder.title />
             <button type="button" on:click=move |_| {}>"..."</button>
             <button type="button" on:click=move |_| {
                 state_setter.update(|state| {
                     state.reminders_list.remove_reminder(reminder.id);
                 });
-            }>"⌫"</button>
+            }>"X"</button>
         </div>
     }
 }

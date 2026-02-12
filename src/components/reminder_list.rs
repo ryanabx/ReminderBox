@@ -29,15 +29,14 @@ pub fn ReminderListWidget(
     let reminders = move || reminder_list().0;
 
     view! {
-        <div class="flex flex-col w-full max-w-xl overflow-y-auto">
-            <p>"My Reminders:"</p>
-            <NewReminderBox/>
+        <div class="flex flex-col w-full max-w-xl px-4 overflow-y-auto">
             <ul class="space-y-2">
                 <For each=reminders key=|reminder| reminder.id let:reminder>
                     <ReminderWidget reminder/>
                 </For>
             </ul>
         </div>
+        <NewReminderBox/>
     }
 }
 
@@ -68,8 +67,20 @@ fn NewReminderBox() -> impl IntoView {
     };
 
     view! {
-        <div>
-            <input type="text" placeholder="Enter a new reminder" on:keydown=add_todo node_ref=input_ref />
+        <div class="flex flex-row grow px-2 py-2 w-full shadow-2xl shadow-black dark:shadow-white">
+            <input type="text" class="grow px-2 py-2" placeholder="Enter a new reminder" on:keydown=add_todo node_ref=input_ref />
+            <button type="button" on:click=move |_| {
+                let input = input_ref.get().unwrap();
+                let title = input.value();
+                let title = title.trim();
+                if !title.is_empty() {
+                    let new_reminder = Reminder::new(Uuid::new_v4(), title.to_string(), false);
+                    state_setter.update(|state| {
+                        state.reminders_list.add_reminder(new_reminder);
+                    });
+                    input.set_value("");
+                }
+            }>+</button>
         </div>
     }
 }
