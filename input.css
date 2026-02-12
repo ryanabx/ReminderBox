@@ -5,7 +5,7 @@ html {
 }
 
 .btn {
-    @apply bg-blue-700 dark:bg-blue-200 hover:bg-blue-500 dark:hover:bg-blue-400 text-white dark:text-black font-bold py-2 px-4 rounded transition-all duration-75;
+    @apply bg-blue-700 dark:bg-blue-200 hover:bg-blue-500 dark:hover:bg-blue-400 text-white dark:text-black font-bold py-2 px-4 rounded transition-all duration-75 touch-manipulation;
 }
 
 h1 {
@@ -21,7 +21,7 @@ h2 {
 }
 
 .remove-button {
-    @apply aspect-square self-center shrink border-none cursor-pointer text-black dark:text-white rounded-full bg-transparent hover:bg-red-200 active:bg-red-400 dark:bg-transparent dark:hover:bg-red-500 dark:active:bg-red-700 transition-all duration-75;
+    @apply aspect-square self-center shrink border-none cursor-pointer text-black dark:text-white rounded-full bg-transparent hover:bg-red-200 active:bg-red-400 dark:bg-transparent dark:hover:bg-red-500 dark:active:bg-red-700 transition-all duration-75 touch-manipulation;
 }
 
 .add-button {
