@@ -7,7 +7,6 @@ pub mod data;
 
 fn main() {
     console_error_panic_hook::set_once();
-    println!("HIIII");
     leptos::mount::mount_to_body(App)
 }
 
