@@ -29,8 +29,8 @@ pub fn ReminderListWidget(
     let reminders = move || reminder_list().0;
 
     view! {
-        <div class="flex flex-col w-full max-w-xl px-4 overflow-y-auto">
-            <ul class="space-y-2">
+        <div class="flex flex-col grow w-full max-w-xl px-4 overflow-y-auto">
+            <ul class="space-y-0">
                 <For each=reminders key=|reminder| reminder.id let:reminder>
                     <ReminderWidget reminder/>
                 </For>
@@ -67,7 +67,7 @@ fn NewReminderBox() -> impl IntoView {
     };
 
     view! {
-        <div class="flex flex-row grow px-2 py-2 w-full shadow-2xl shadow-black dark:shadow-white">
+        <div class="flex flex-row px-2 py-2 w-full shadow-2xl shadow-black dark:shadow-white">
             <input type="text" class="grow px-2 py-2" placeholder="Enter a new reminder" on:keydown=add_todo node_ref=input_ref />
             <button type="button" on:click=move |_| {
                 let input = input_ref.get().unwrap();
