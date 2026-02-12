@@ -38,11 +38,9 @@ fn App() -> impl IntoView {
     let reminders = move || user_data.with(|d| d.reminders_list.clone());
 
     view! {
-        <div class="flex w-full h-full">
-            <div class="flex flex-col grow items-center">
-                <Header />
-                <ReminderListWidget reminder_list=reminders/>
-            </div>
+        <div class="flex flex-col grow items-center">
+            <Header />
+            <ReminderListWidget reminder_list=reminders/>
         </div>
     }
 }
