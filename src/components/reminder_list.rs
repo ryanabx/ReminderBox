@@ -67,9 +67,9 @@ fn NewReminderBox() -> impl IntoView {
     };
 
     view! {
-        <div class="flex flex-row px-2 py-2 w-full shadow-2xl shadow-black dark:shadow-white">
-            <input type="text" class="grow px-2 py-2" placeholder="Enter a new reminder" on:keydown=add_todo node_ref=input_ref />
-            <button type="button" on:click=move |_| {
+        <div class="flex flex-row bg-transparent px-2 py-2 w-full shadow-2xl space-x-2">
+            <input type="text" class="grow px-4 py-1 border-2 rounded-2xl border-black dark:border-white transition-all focus:outline-gray-800 dark:focus:outline-gray-400 focus:outline-1" placeholder="Enter a new reminder" on:keydown=add_todo node_ref=input_ref />
+            <button type="button" class="btn add-button" on:click=move |_| {
                 let input = input_ref.get().unwrap();
                 let title = input.value();
                 let title = title.trim();
