@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <!-- Includes an image, automatically handling the output path -->
   <link data-trunk rel="copy-file" href="./icons/ReminderBox-192x192.png" />
   <link data-trunk rel="copy-file" href="./favicon.ico" />
@@ -15,7 +15,7 @@
   <link rel="icon" type="image/x-icon" href="./favicon.ico">
 </head>
 
-<body class="w-screen h-screen flex flex-col items-center">
+<body class="w-screen h-screen flex flex-col items-center overscroll-none">
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
