@@ -18,7 +18,7 @@ impl ReminderList {
     }
     /// Remove a reminder by uuid
     pub fn remove_reminder(&mut self, id: Uuid) {
-        self.0.retain(|a| a.id() != id);
+        self.0.retain(|a| a.id != id);
     }
 }
 
@@ -33,7 +33,7 @@ pub fn ReminderListWidget(
             <p>"My Reminders:"</p>
             <NewReminderBox/>
             <ul class="space-y-2">
-                <For each=reminders key=|reminder| reminder.id() let:reminder>
+                <For each=reminders key=|reminder| reminder.id let:reminder>
                     <ReminderWidget reminder/>
                 </For>
             </ul>

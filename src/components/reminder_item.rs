@@ -6,7 +6,7 @@ use crate::data::UserData;
 
 #[derive(Clone, Debug, PartialEq, Eq, Deserialize, Serialize)]
 pub struct Reminder {
-    id: Uuid,
+    pub id: Uuid,
     title: RwSignal<String>,
     completed: RwSignal<bool>,
 }
@@ -21,10 +21,6 @@ impl Reminder {
             completed,
         }
     }
-
-    pub fn id(&self) -> Uuid {
-        self.id
-    }
 }
 
 #[component]
@@ -37,7 +33,7 @@ pub fn ReminderWidget(reminder: Reminder) -> impl IntoView {
             <button type="button" on:click=move |_| {}>"..."</button>
             <button type="button" on:click=move |_| {
                 state_setter.update(|state| {
-                    state.reminders_list.remove_reminder(reminder.id());
+                    state.reminders_list.remove_reminder(reminder.id);
                 });
             }>"⌫"</button>
         </div>
