@@ -1,54 +1,76 @@
 use leptos::{ev, html::Button, prelude::*};
 use serde::{Deserialize, Serialize};
 use uuid::Uuid;
-use web_sys::{Node, wasm_bindgen::JsCast};
+use web_sys::{Event, Node, wasm_bindgen::JsCast};
 
-use crate::data::UserData;
+use crate::{Page, data::UserData};
 
 #[derive(Clone, Debug, PartialEq, Eq, Deserialize, Serialize)]
 pub struct Reminder {
     pub id: Uuid,
-    pub title: RwSignal<String>,
-    pub notes: RwSignal<String>,
-    pub completed: RwSignal<bool>,
+    pub title: String,
+    pub notes: String,
+    pub completed: bool,
+    pub due_date: String,
+    pub due_time: String,
 }
 
 impl Reminder {
     pub fn new(id: Uuid, title: String, completed: bool) -> Self {
-        let title = RwSignal::new(title);
-        let notes = RwSignal::new(String::new());
-        let completed = RwSignal::new(completed);
         Reminder {
             id,
             title,
-            notes,
+            notes: String::new(),
             completed,
+            due_date: String::new(),
+            due_time: String::new(),
         }
     }
 }
 
 #[component]
 pub fn ReminderWidget(reminder: Reminder) -> impl IntoView {
+    let id = reminder.id.clone();
+    let set_user_data = use_context::<WriteSignal<UserData>>().unwrap();
+
+    let on_reminder_change = move |ev| {
+        set_user_data.update(|user_data| {
+            let checked = event_target_checked(&ev);
+            if let Some(reminder) = user_data.reminders_list.reminder_mut(reminder.id) {
+                reminder.completed = checked;
+            }
+        })
+    };
+
     view! {
         <div draggable=true class="flex flex-row space-x-2">
-            <ReminderCheckbox completed={reminder.completed} />
+            <ReminderCheckbox completed={reminder.completed} on_change=on_reminder_change />
             <p class="grow py-2 px-2">{reminder.title}</p>
-            <RemoveButton reminder_id=reminder.id/>
+            <InfoButton reminder_id=id/>
+            <RemoveButton reminder_id=id/>
         </div>
     }
 }
 
 #[component]
-pub fn ReminderCheckbox(completed: RwSignal<bool>) -> impl IntoView {
+pub fn ReminderCheckbox(completed: bool, on_change: impl FnMut(Event) + 'static) -> impl IntoView {
     view! {
         <label class="flex items-center cursor-pointer space-x-3">
-        <input type="checkbox" class="hidden peer" bind:checked=completed />
+        <input type="checkbox" class="hidden peer" checked=completed on:change=on_change />
         <div class="w-6 h-6 rounded-full border-2 border-gray-400 peer-checked:bg-blue-500 peer-checked:border-blue-500 transition-colors duration-150 flex items-center justify-center">
-            <svg class="w-3 h-3 {} text-white transition-opacity" class:opacity-0=move || {!completed.get()} fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <svg class="w-3 h-3 {} text-white transition-opacity" class:opacity-0=move || {!completed} fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
             </svg>
         </div>
         </label>
+    }
+}
+
+#[component]
+pub fn InfoButton(reminder_id: Uuid) -> impl IntoView {
+    let set_page = use_context::<WriteSignal<Page>>().unwrap();
+    view! {
+        <button class="btn btn-circle" on:click=move |_| {set_page.set(Page::Settings(reminder_id))}>"i"</button>
     }
 }
 

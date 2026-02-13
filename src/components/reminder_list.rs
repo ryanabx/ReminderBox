@@ -20,6 +20,14 @@ impl ReminderList {
     pub fn remove_reminder(&mut self, id: Uuid) {
         self.0.retain(|a| a.id != id);
     }
+    /// Get a mutable reference to a reminder
+    pub fn reminder_mut(&mut self, id: Uuid) -> Option<&mut Reminder> {
+        self.0.iter_mut().find(|a| a.id == id)
+    }
+    /// Get a mutable reference to a reminder
+    pub fn reminder(&self, id: Uuid) -> Option<&Reminder> {
+        self.0.iter().find(|a| a.id == id)
+    }
 }
 
 #[component]

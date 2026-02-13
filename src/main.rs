@@ -2,10 +2,7 @@ use leptos::prelude::*;
 use uuid::Uuid;
 
 use crate::{
-    components::{
-        reminder_item::Reminder, reminder_list::ReminderListWidget,
-        reminder_settings::ReminderSettings,
-    },
+    components::{reminder_list::ReminderListWidget, reminder_settings::ReminderSettings},
     data::UserData,
 };
 
@@ -17,10 +14,21 @@ fn main() {
     leptos::mount::mount_to_body(App)
 }
 
+#[derive(Clone, Debug, Default)]
+pub enum Page {
+    #[default]
+    Main,
+    Settings(Uuid),
+}
+
 #[component]
 fn App() -> impl IntoView {
     // The `user data` is a signal, since we need to reactively update the list
     let (user_data, set_user_data) = signal(UserData::new());
+    // The current page we are on
+    let (page, set_page) = signal(Page::default());
+
+    provide_context(set_page);
 
     // We provide a context that each <Todo/> component can use to update the list
     // Here, I'm just passing the `WriteSignal`; a <Todo/> doesn't need to read the whole list
@@ -41,14 +49,14 @@ fn App() -> impl IntoView {
         data::local_storage_effect(&user_data);
     });
 
-    let reminders = move || user_data.with(|d| d.reminders_list.clone());
-
-    let reminder = Reminder::new(Uuid::new_v4(), "Reminder Example".to_string(), false);
-
     view! {
         <Header />
-        <ReminderListWidget reminder_list=reminders/>
-        // <ReminderSettings reminder=reminder />
+        {
+            move || match page.get() {
+                Page::Main => view! { <ReminderListWidget reminder_list=move || user_data.with(|d| d.reminders_list.clone())/> }.into_any(),
+                Page::Settings(reminder) => view! { <ReminderSettings reminder=user_data.with(|d| d.reminders_list.reminder(reminder).unwrap().clone()) /> }.into_any(),
+            }
+        }
     }
 }
 
