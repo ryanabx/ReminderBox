@@ -1,4 +1,4 @@
-use leptos::{html::Input, prelude::*};
+use leptos::prelude::*;
 use serde::{Deserialize, Serialize};
 use uuid::Uuid;
 use web_sys::KeyboardEvent;
@@ -47,38 +47,36 @@ const ENTER_KEY: u32 = 13;
 fn NewReminderBox() -> impl IntoView {
     let state_setter = use_context::<WriteSignal<UserData>>().expect("Could not find user data");
 
-    // Callback to add a todo on pressing the `Enter` key, if the field isn't empty
-    let input_ref = NodeRef::<Input>::new();
+    let text = RwSignal::new(String::new());
+
     let add_todo = move |ev: KeyboardEvent| {
-        let input = input_ref.get().unwrap();
         ev.stop_propagation();
         let key_code = ev.key_code();
         if key_code == ENTER_KEY {
-            let title = input.value();
+            let title = text.get();
             let title = title.trim();
             if !title.is_empty() {
                 let new_reminder = Reminder::new(Uuid::new_v4(), title.to_string(), false);
                 state_setter.update(|state| {
                     state.reminders_list.add_reminder(new_reminder);
                 });
-                input.set_value("");
+                text.set(String::new());
             }
         }
     };
 
     view! {
         <div class="flex flex-row bg-transparent px-2 py-2 w-full shadow-2xl space-x-2">
-            <input type="text" class="grow standard-input new-reminder-input" placeholder="Enter a new reminder" on:keydown=add_todo node_ref=input_ref />
-            <button type="button" class="btn add-button" on:click=move |_| {
-                let input = input_ref.get().unwrap();
-                let title = input.value();
+            <input type="text" class="grow standard-input new-reminder-input" placeholder="Enter a new reminder" bind:value=text on:keydown=add_todo />
+            <button type="button" class="btn add-button" disabled=move || text.get().trim().is_empty() on:click=move |_| {
+                let title = text.get();
                 let title = title.trim();
                 if !title.is_empty() {
                     let new_reminder = Reminder::new(Uuid::new_v4(), title.to_string(), false);
                     state_setter.update(|state| {
                         state.reminders_list.add_reminder(new_reminder);
                     });
-                    input.set_value("");
+                    text.set(String::new());
                 }
             }>+</button>
         </div>
