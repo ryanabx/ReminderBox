@@ -1,6 +1,7 @@
-use leptos::prelude::*;
+use leptos::{ev, html::Button, prelude::*};
 use serde::{Deserialize, Serialize};
 use uuid::Uuid;
+use web_sys::{HtmlElement, wasm_bindgen::JsCast};
 
 use crate::data::UserData;
 
@@ -53,55 +54,79 @@ pub fn ReminderCheckbox(completed: RwSignal<bool>) -> impl IntoView {
 
 #[component]
 pub fn RemoveButton(reminder_id: Uuid) -> impl IntoView {
-    // view! {
-    //     <button type="button" class="remove-button w-6" on:click=move |_| {
-    //         state_setter.update(|state| {
-    //             state.reminders_list.remove_reminder(reminder.id);
-    //         });
-    //     }>X</button>
-    // }
-    // Signal to toggle the confirmation dialog
     let state_setter = use_context::<WriteSignal<UserData>>().expect("Could not find user data");
+    // Signal to toggle the confirmation dialog
     let show_dialog = RwSignal::new(false);
+
+    let btn_ref = NodeRef::<Button>::new();
+    let btn_ref_2 = NodeRef::<Button>::new();
+
+    let handle = window_event_listener(ev::click, move |ev| {
+        if show_dialog.get()
+            && ev.target().is_none_or(|x| {
+                x.dyn_into::<HtmlElement>().is_ok_and(|x| {
+                    btn_ref.get().is_some_and(|button| {
+                        !button.contains(Some(&x))
+                            && btn_ref_2
+                                .get()
+                                .is_none_or(|button2| !button2.contains(Some(&x)))
+                    })
+                })
+            })
+        {
+            show_dialog.set(false);
+        }
+    });
+    on_cleanup(move || handle.remove());
 
     view! {
         <>
+            <Show
+                when=move || {show_dialog.get()}
+                fallback=move || view!{
+                    <button
+                        type="button"
+                        class="remove-button w-6"
+                        on:click=move |_| {show_dialog.set(true);}
+                        node_ref=btn_ref_2
+                    >"X"</button>
+                }>
             // The delete button
             <button
                 type="button"
-                class="remove-button w-6"
-                on:click=move |_| show_dialog.set(true)
-            >"X"</button>
-            {move || {
-                show_dialog.get().then(|| {
-                    view! {
-                        <div class="fixed inset-0 flex items-center full-screen justify-center bg-black/50 z-50">
-                            <div class="absolute inset-0" on:click=move |evt| {show_dialog.set(false); evt.stop_propagation();}></div>
-                            <div class="bg-white dark:bg-gray-800 p-6 rounded space-y-4 relative z-10">
-                                <p>"Are you sure you want to delete this reminder?"</p>
-                                <div class="flex justify-end space-x-2">
-                                    <button
-                                        class="btn"
-                                        on:click=move |_| show_dialog.set(false)
-                                    >
-                                        "Cancel"
-                                    </button>
-                                    <button
-                                        class="btn btn-red"
-                                        on:click=move |_| {
-                                            state_setter.update(|state| {
-                                                state.reminders_list.remove_reminder(reminder_id);
-                                            });
-                                        }
-                                        >
-                                        "Delete"
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    }
-                })
-            }}
+                class="btn btn-red"
+                on:click=move |_| {
+                    state_setter.update(|state| {
+                        state.reminders_list.remove_reminder(reminder_id);
+                    });
+                }
+                node_ref=btn_ref
+            >"Delete"</button>
+            // <div class="fixed inset-0 flex items-center full-screen justify-center bg-black/50 z-50">
+            //     <div class="absolute inset-0" on:click=move |evt| {show_dialog.set(false); evt.stop_propagation();}></div>
+            //     <div class="bg-white dark:bg-gray-800 p-6 rounded space-y-4 relative z-10">
+            //         <p>"Are you sure you want to delete this reminder?"</p>
+            //         <div class="flex justify-end space-x-2">
+            //             <button
+            //                 class="btn"
+            //                 on:click=move |_| show_dialog.set(false)
+            //             >
+            //                 "Cancel"
+            //             </button>
+            //             <button
+            //                 class="btn btn-red"
+            //                 on:click=move |_| {
+            //                     state_setter.update(|state| {
+            //                         state.reminders_list.remove_reminder(reminder_id);
+            //                     });
+            //                 }
+            //                 >
+            //                 "Delete"
+            //             </button>
+            //         </div>
+            //     </div>
+            // </div>
+            </Show>
         </>
     }
 }
