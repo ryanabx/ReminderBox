@@ -29,7 +29,7 @@ pub fn ReminderListWidget(
     let reminders = move || reminder_list().0;
 
     view! {
-        <div class="flex flex-col grow w-full max-w-xl px-4 overflow-y-auto">
+        <div class="flex flex-col grow w-full max-w-xl px-4 overflow-y-auto overscroll-auto">
             <ul class="space-y-0">
                 <For each=reminders key=|reminder| reminder.id let:reminder>
                     <ReminderWidget reminder/>
