@@ -25,16 +25,11 @@ impl Reminder {
 
 #[component]
 pub fn ReminderWidget(reminder: Reminder) -> impl IntoView {
-    let state_setter = use_context::<WriteSignal<UserData>>().expect("Could not find user data");
     view! {
         <div draggable=true class="flex flex-row space-x-2">
             <ReminderCheckbox completed={reminder.completed} />
             <p class="grow py-2 px-2">{reminder.title}</p>
-            <button type="button" class="remove-button w-6" on:click=move |_| {
-                state_setter.update(|state| {
-                    state.reminders_list.remove_reminder(reminder.id);
-                });
-            }>X</button>
+            <RemoveButton reminder_id=reminder.id/>
         </div>
     }
 }
@@ -50,5 +45,60 @@ pub fn ReminderCheckbox(completed: RwSignal<bool>) -> impl IntoView {
             </svg>
         </div>
         </label>
+    }
+}
+
+#[component]
+pub fn RemoveButton(reminder_id: Uuid) -> impl IntoView {
+    // view! {
+    //     <button type="button" class="remove-button w-6" on:click=move |_| {
+    //         state_setter.update(|state| {
+    //             state.reminders_list.remove_reminder(reminder.id);
+    //         });
+    //     }>X</button>
+    // }
+    // Signal to toggle the confirmation dialog
+    let state_setter = use_context::<WriteSignal<UserData>>().expect("Could not find user data");
+    let show_dialog = RwSignal::new(false);
+
+    view! {
+        <>
+            // The delete button
+            <button
+                type="button"
+                class="remove-button w-6"
+                on:click=move |_| show_dialog.set(true)
+            >"X"</button>
+            {move || {
+                show_dialog.get().then(|| {
+                    view! {
+                        <div class="fixed inset-0 flex items-center full-screen justify-center bg-black/50 z-50">
+                            <div class="absolute inset-0" on:click=move |evt| {show_dialog.set(false); evt.stop_propagation();}></div>
+                            <div class="bg-white dark:bg-gray-800 p-6 rounded space-y-4 relative z-10">
+                                <p>"Are you sure you want to delete this reminder?"</p>
+                                <div class="flex justify-end space-x-2">
+                                    <button
+                                        class="btn"
+                                        on:click=move |_| show_dialog.set(false)
+                                    >
+                                        "Cancel"
+                                    </button>
+                                    <button
+                                        class="btn btn-red"
+                                        on:click=move |_| {
+                                            state_setter.update(|state| {
+                                                state.reminders_list.remove_reminder(reminder_id);
+                                            });
+                                        }
+                                        >
+                                        "Delete"
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                })
+            }}
+        </>
     }
 }
