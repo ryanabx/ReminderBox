@@ -1,7 +1,7 @@
 use leptos::{ev, html::Button, prelude::*};
 use serde::{Deserialize, Serialize};
 use uuid::Uuid;
-use web_sys::{HtmlElement, wasm_bindgen::JsCast};
+use web_sys::{Node, wasm_bindgen::JsCast};
 
 use crate::data::UserData;
 
@@ -61,10 +61,10 @@ pub fn RemoveButton(reminder_id: Uuid) -> impl IntoView {
     let btn_ref = NodeRef::<Button>::new();
     let btn_ref_2 = NodeRef::<Button>::new();
 
-    let handle = window_event_listener(ev::click, move |ev| {
+    let handle = window_event_listener(ev::pointerdown, move |ev| {
         if show_dialog.get()
             && ev.target().is_none_or(|x| {
-                x.dyn_into::<HtmlElement>().is_ok_and(|x| {
+                x.dyn_into::<Node>().is_ok_and(|x| {
                     btn_ref.get().is_some_and(|button| {
                         !button.contains(Some(&x))
                             && btn_ref_2
