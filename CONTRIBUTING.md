@@ -33,3 +33,11 @@ trunk build --release
 ## TailwindCSS Setup
 
 See: https://github.com/leptos-rs/leptos/tree/main/examples/tailwind_csr
+
+## Regenerating Favicons
+
+Use a favicon converter, such as https://favicon.io/favicon-converter/
+
+Copy files into icons
+
+Make sure all icons are loaded in `index.html`
