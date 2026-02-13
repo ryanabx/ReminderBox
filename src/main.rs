@@ -1,6 +1,7 @@
 use leptos::prelude::*;
+use uuid::Uuid;
 
-use crate::{components::reminder_list::ReminderListWidget, data::UserData};
+use crate::{components::{reminder_item::Reminder, reminder_list::ReminderListWidget, reminder_settings::ReminderSettings}, data::UserData};
 
 pub mod components;
 pub mod data;
@@ -36,9 +37,12 @@ fn App() -> impl IntoView {
 
     let reminders = move || user_data.with(|d| d.reminders_list.clone());
 
+    let reminder = Reminder::new(Uuid::new_v4(), "Reminder Example".to_string(), false);
+
     view! {
         <Header />
         <ReminderListWidget reminder_list=reminders/>
+        // <ReminderSettings reminder=reminder />
     }
 }
 

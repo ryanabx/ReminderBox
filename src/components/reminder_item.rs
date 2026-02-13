@@ -7,8 +7,8 @@ use crate::data::UserData;
 #[derive(Clone, Debug, PartialEq, Eq, Deserialize, Serialize)]
 pub struct Reminder {
     pub id: Uuid,
-    title: RwSignal<String>,
-    completed: RwSignal<bool>,
+    pub title: RwSignal<String>,
+    pub completed: RwSignal<bool>,
 }
 
 impl Reminder {
