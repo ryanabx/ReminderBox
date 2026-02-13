@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+/* Toplevel Stuff */
+
 html {
     @apply bg-gray-50 dark:bg-black text-black dark:text-white overscroll-none select-none;
 }
@@ -12,24 +14,46 @@ html, body {
     @apply w-dvw h-dvh;
 }
 
-.btn {
-    @apply bg-blue-700 dark:bg-blue-500 hover:bg-blue-300 text-white font-bold py-2 px-4 rounded transition-all duration-75 touch-manipulation;
+/* Main Header/Subtitle & Header Bar */
+
+.main-header {
+    @apply text-blue-500 font-bold text-center text-xl;
 }
 
-.btn-red {
-    @apply bg-red-700 dark:bg-red-500 hover:bg-red-300 text-white;
-}
-
-h1 {
-    @apply text-blue-500;
-}
-
-h2 {
-    @apply text-gray-700 dark:text-gray-200;
+.main-subtitle {
+    @apply text-gray-700 dark:text-gray-200 italic text-center text-sm;
 }
 
 .headerbar {
     @apply text-black dark:text-white;
+}
+
+/* Containers */
+
+.toplevel-container {
+    @apply flex flex-col grow w-full max-w-xl px-4 m-4;
+}
+
+.container-alt {
+    @apply bg-gray-300 dark:bg-gray-900 rounded-2xl px-2 py-6;
+}
+
+/* Buttons */
+
+.btn {
+    @apply border-none bg-gray-700 hover:bg-gray-500 active:bg-gray-800 text-white font-bold py-2 px-4 rounded transition-all duration-75 touch-manipulation;
+}
+
+.btn-blue {
+    @apply bg-blue-700 hover:bg-blue-500 active:bg-blue-800 text-white;
+}
+
+.btn-red {
+    @apply bg-red-700 hover:bg-red-500 active:bg-red-800 text-white;
+}
+
+.btn-circle {
+    @apply rounded-full aspect-square;
 }
 
 .remove-button {
@@ -40,14 +64,12 @@ h2 {
     @apply rounded-full font-mono;
 }
 
+/* Text Inputs */
+
 .standard-input {
-    @apply px-4 py-1 border-2 border-black dark:border-white transition-all focus:outline-gray-800 dark:focus:outline-gray-400 focus:outline-1;
+    @apply px-4 py-1 rounded-md transition-all focus:outline-none;
 }
 
 .new-reminder-input {
-    @apply rounded-2xl;
-}
-
-.toplevel-container {
-    @apply flex flex-col grow w-full max-w-xl px-4;
+    @apply rounded-2xl border-2 border-black dark:border-white focus:outline-gray-800 dark:focus:outline-gray-400 focus:outline-1;
 }

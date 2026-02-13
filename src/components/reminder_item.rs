@@ -8,16 +8,19 @@ use crate::data::UserData;
 pub struct Reminder {
     pub id: Uuid,
     pub title: RwSignal<String>,
+    pub notes: RwSignal<String>,
     pub completed: RwSignal<bool>,
 }
 
 impl Reminder {
     pub fn new(id: Uuid, title: String, completed: bool) -> Self {
         let title = RwSignal::new(title);
+        let notes = RwSignal::new(String::new());
         let completed = RwSignal::new(completed);
         Reminder {
             id,
             title,
+            notes,
             completed,
         }
     }

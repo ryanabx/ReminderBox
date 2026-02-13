@@ -1,7 +1,13 @@
 use leptos::prelude::*;
 use uuid::Uuid;
 
-use crate::{components::{reminder_item::Reminder, reminder_list::ReminderListWidget, reminder_settings::ReminderSettings}, data::UserData};
+use crate::{
+    components::{
+        reminder_item::Reminder, reminder_list::ReminderListWidget,
+        reminder_settings::ReminderSettings,
+    },
+    data::UserData,
+};
 
 pub mod components;
 pub mod data;
@@ -50,8 +56,8 @@ fn App() -> impl IntoView {
 fn Header() -> impl IntoView {
     view! {
         <div class="flex flex-col w-full headerbar">
-            <h1 class="font-bold text-center text-xl">"ReminderBox"</h1>
-            <h2 class="italic text-center text-sm">"Your reminders in a box :)"</h2>
+            <h1 class="main-header">"ReminderBox"</h1>
+            <h2 class="main-subtitle">"Your reminders in a box :)"</h2>
         </div>
     }
 }
