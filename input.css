@@ -4,6 +4,11 @@ html {
     @apply bg-gray-50 dark:bg-black text-black dark:text-white overscroll-none select-none;
 }
 
+html, body {
+  height: calc(var(--vh, 1vh) * 100);
+  overflow: hidden;
+}
+
 .btn {
     @apply bg-blue-700 dark:bg-blue-500 hover:bg-blue-300 text-white font-bold py-2 px-4 rounded transition-all duration-75 touch-manipulation;
 }
