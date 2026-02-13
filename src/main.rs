@@ -54,10 +54,14 @@ fn App() -> impl IntoView {
 
 #[component]
 fn Header() -> impl IntoView {
+    let commit_hash = env!("GIT_COMMIT_HASH");
     view! {
         <div class="flex flex-col w-full headerbar">
-            <h1 class="main-header">"ReminderBox"</h1>
-            <h2 class="main-subtitle">"Your reminders in a box :)"</h2>
+            <div class="flex flex-row w-full grow justify-center space-x-1 items-center">
+                <h1 class="main-header">"ReminderBox"</h1>
+                <h2 class="main-subtitle">"- Your reminders in a box :)"</h2>
+            </div>
+            <h6 class="commit-info">{format!("Commit {}", commit_hash)}</h6>
         </div>
     }
 }

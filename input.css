@@ -17,11 +17,15 @@ html, body {
 /* Main Header/Subtitle & Header Bar */
 
 .main-header {
-    @apply text-blue-500 font-bold text-center text-xl;
+    @apply text-blue-500 font-bold text-center text-lg;
 }
 
 .main-subtitle {
     @apply text-gray-700 dark:text-gray-200 italic text-center text-sm;
+}
+
+.commit-info {
+    @apply text-gray-400 dark:text-gray-600 italic text-center text-xs;
 }
 
 .headerbar {
