@@ -28,17 +28,6 @@
           });
       });
     }
-    // Reapply vh when window height changes.
-    // Should fix iOS OSK changing size
-    // Maybe helps with window resizing on desktop browsers?
-    // Run on load and on resize
-    function setVh() {
-      const vh = window.innerHeight * 0.01;
-      document.documentElement.style.setProperty('--vh', `${vh}px`);
-    }
-
-    window.addEventListener('resize', setVh);
-    setVh();
   </script>
 
 </body>
