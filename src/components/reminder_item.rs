@@ -43,9 +43,9 @@ pub fn ReminderWidget(reminder: Reminder) -> impl IntoView {
     };
 
     view! {
-        <div draggable=true class="flex flex-row space-x-2">
+        <div draggable=true class="flex flex-row space-x-2 constrain-x">
             <ReminderCheckbox completed={reminder.completed} on_change=on_reminder_change />
-            <p class="grow py-2 px-2">{reminder.title}</p>
+            <p class="grow py-2 px-2 wrap-anywhere">{reminder.title}</p>
             <InfoButton reminder_id=id/>
             <RemoveButton reminder_id=id/>
         </div>

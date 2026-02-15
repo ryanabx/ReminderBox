@@ -50,7 +50,7 @@ fn App() -> impl IntoView {
     });
 
     view! {
-        <Header />
+        // <Header />
         {
             move || match page.get() {
                 Page::Main => view! { <ReminderListWidget reminder_list=move || user_data.with(|d| d.reminders_list.clone())/> }.into_any(),

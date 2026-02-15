@@ -37,10 +37,12 @@ pub fn ReminderListWidget(
     let reminders = move || reminder_list().0;
 
     view! {
-        <div class="toplevel-container overflow-y-auto overscroll-auto">
-            <ul class="space-y-0">
+        <div class="toplevel-container scroll-container">
+            <ul class="space-y-0 w-full flex flex-col items-center">
+                <hr />
                 <For each=reminders key=|reminder| reminder.id let:reminder>
                     <ReminderWidget reminder/>
+                    <hr />
                 </For>
             </ul>
         </div>
@@ -74,9 +76,9 @@ fn NewReminderBox() -> impl IntoView {
     };
 
     view! {
-        <div class="flex flex-row bg-transparent px-2 py-2 w-full shadow-2xl space-x-2">
-            <input type="text" class="grow standard-input new-reminder-input" placeholder="Enter a new reminder" bind:value=text on:keydown=add_todo />
-            <button type="button" class="btn add-button" disabled=move || text.get().trim().is_empty() on:click=move |_| {
+        <div class="flex flex-row bg-transparent px-2 py-2 constrain-x space-x-2">
+            <input type="text" class="grow text-input" placeholder="Enter a new reminder" bind:value=text on:keydown=add_todo />
+            <button type="button" class="btn btn-blue" disabled=move || text.get().trim().is_empty() on:click=move |_| {
                 let title = text.get();
                 let title = title.trim();
                 if !title.is_empty() {
