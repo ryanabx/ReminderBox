@@ -38,11 +38,9 @@ pub fn ReminderListWidget(
 
     view! {
         <div class="toplevel-container scroll-container">
-            <ul class="space-y-0 w-full flex flex-col items-center">
-                <hr />
+            <ul class="container-reminder-list">
                 <For each=reminders key=|reminder| reminder.id let:reminder>
                     <ReminderWidget reminder/>
-                    <hr />
                 </For>
             </ul>
         </div>
@@ -76,19 +74,21 @@ fn NewReminderBox() -> impl IntoView {
     };
 
     view! {
-        <div class="flex flex-row rounded-full bg-neutral-300/50 dark:bg-neutral-800/50 px-2 py-2 constrain-x">
-            <input type="text" class="grow reminder-input rounded-full" placeholder="Enter a new reminder" bind:value=text on:keydown=add_todo />
-            <button type="button" class="btn btn-blue btn-circle transition-all ml-2" class:functionally-hidden-x=move || text.get().trim().is_empty() on:click=move |_| {
-                let title = text.get();
-                let title = title.trim();
-                if !title.is_empty() {
-                    let new_reminder = Reminder::new(Uuid::new_v4(), title.to_string(), false);
-                    state_setter.update(|state| {
-                        state.reminders_list.add_reminder(new_reminder);
-                    });
-                    text.set(String::new());
-                }
-            }>+</button>
+        <div class="container-reminder-input">
+            <div class="container-reminder-input-inner">
+                <input type="text" class="grow reminder-input rounded-full" placeholder="Enter a new reminder" bind:value=text on:keydown=add_todo />
+                <button type="button" class="btn btn-blue btn-circle transition-all ml-2" class:functionally-hidden-x=move || text.get().trim().is_empty() on:click=move |_| {
+                    let title = text.get();
+                    let title = title.trim();
+                    if !title.is_empty() {
+                        let new_reminder = Reminder::new(Uuid::new_v4(), title.to_string(), false);
+                        state_setter.update(|state| {
+                            state.reminders_list.add_reminder(new_reminder);
+                        });
+                        text.set(String::new());
+                    }
+                }>+</button>
+            </div>
         </div>
     }
 }
