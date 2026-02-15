@@ -3,7 +3,7 @@
 /* Toplevel Stuff */
 
 html {
-    @apply bg-gray-50 dark:bg-black text-black dark:text-white overscroll-none select-none;
+    @apply bg-neutral-50 dark:bg-black text-black dark:text-white overscroll-none select-none;
 }
 
 html, body {
@@ -21,11 +21,11 @@ html, body {
 }
 
 .main-subtitle {
-    @apply text-gray-700 dark:text-gray-200 italic text-center text-sm;
+    @apply text-neutral-700 dark:text-neutral-200 italic text-center text-sm;
 }
 
 .commit-info {
-    @apply text-gray-400 dark:text-gray-600 italic text-center text-xs;
+    @apply text-neutral-400 dark:text-neutral-600 italic text-center text-xs;
 }
 
 .headerbar {
@@ -47,15 +47,15 @@ html, body {
 }
 
 .container-alt {
-    @apply bg-gray-300 dark:bg-gray-900 rounded-2xl px-2 py-6;
+    @apply bg-neutral-300 dark:bg-neutral-900 rounded-2xl px-2 py-6;
 }
 
 /* Buttons */
 
 .btn {
     @apply
-    bg-gray-700 hover:bg-gray-500 active:bg-gray-800 disabled:bg-gray-800 /* Background colors */
-    text-white disabled:text-gray-500 /* Text colors */
+    bg-neutral-700 hover:bg-neutral-500 active:bg-neutral-800 disabled:bg-neutral-800 /* Background colors */
+    text-white disabled:text-neutral-500 /* Text colors */
     border-none /* No Border by default */
     py-2 px-4 /* Padding */
     rounded /* Rounding */
@@ -90,7 +90,7 @@ html, body {
 }
 
 .add-button {
-    @apply border-solid rounded-full font-mono border-2 border-gray-300 disabled:border-gray-800;
+    @apply border-solid rounded-full font-mono border-2 border-neutral-300 disabled:border-neutral-800;
 }
 
 /* Text Inputs */
@@ -98,10 +98,10 @@ html, body {
 .text-input {
     @apply
     appearance-none
-    bg-gray-200 dark:bg-gray-800
-    border-2 border-gray-200 dark:border-gray-800 rounded
+    bg-neutral-200 dark:bg-neutral-800
+    border-2 border-neutral-200 dark:border-neutral-800 rounded
     w-full py-2 px-4
-    text-gray-700 dark:text-gray-300 leading-tight
+    text-neutral-700 dark:text-neutral-300 leading-tight
     focus:outline-none focus:bg-white dark:focus:bg-black focus:border-blue-500;
 }
 

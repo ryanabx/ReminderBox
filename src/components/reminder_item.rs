@@ -57,7 +57,7 @@ pub fn ReminderCheckbox(completed: bool, on_change: impl FnMut(Event) + 'static)
     view! {
         <label class="flex items-center cursor-pointer space-x-3">
         <input type="checkbox" class="hidden peer" checked=completed on:change=on_change />
-        <div class="w-6 h-6 rounded-full border-2 border-gray-400 peer-checked:bg-blue-500 peer-checked:border-blue-500 transition-colors duration-150 flex items-center justify-center">
+        <div class="w-6 h-6 rounded-full border-2 border-neutral-400 peer-checked:bg-blue-500 peer-checked:border-blue-500 transition-colors duration-150 flex items-center justify-center">
             <svg class="w-3 h-3 {} text-white transition-opacity" class:opacity-0=move || {!completed} fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
             </svg>
@@ -126,7 +126,7 @@ pub fn RemoveButton(reminder_id: Uuid) -> impl IntoView {
             >"Delete"</button>
             // <div class="fixed inset-0 flex items-center full-screen justify-center bg-black/50 z-50">
             //     <div class="absolute inset-0" on:click=move |evt| {show_dialog.set(false); evt.stop_propagation();}></div>
-            //     <div class="bg-white dark:bg-gray-800 p-6 rounded space-y-4 relative z-10">
+            //     <div class="bg-white dark:bg-neutral-800 p-6 rounded space-y-4 relative z-10">
             //         <p>"Are you sure you want to delete this reminder?"</p>
             //         <div class="flex justify-end space-x-2">
             //             <button
