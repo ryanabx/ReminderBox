@@ -109,6 +109,28 @@ html, body {
     @apply px-4 py-1 rounded-md transition-all focus:outline-none;
 }
 
-.new-reminder-input {
-    @apply rounded-2xl border-2 border-black dark:border-white focus:outline-none;
+.reminder-input {
+    @apply
+    appearance-none
+    bg-transparent
+    border-none
+    w-full py-2 px-4
+    text-neutral-700 dark:text-neutral-300 leading-tight
+    focus:outline-none focus:bg-white dark:focus:bg-black transition-all duration-150;
+}
+
+.functionally-hidden-x {
+    @apply
+    opacity-0
+    max-w-0
+    px-0
+    mx-0
+}
+
+.functionally-hidden-y {
+    @apply
+    opacity-0
+    max-h-0
+    py-0
+    my-0
 }

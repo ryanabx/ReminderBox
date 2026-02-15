@@ -76,9 +76,9 @@ fn NewReminderBox() -> impl IntoView {
     };
 
     view! {
-        <div class="flex flex-row bg-transparent px-2 py-2 constrain-x space-x-2">
-            <input type="text" class="grow text-input" placeholder="Enter a new reminder" bind:value=text on:keydown=add_todo />
-            <button type="button" class="btn btn-blue" disabled=move || text.get().trim().is_empty() on:click=move |_| {
+        <div class="flex flex-row rounded-full bg-neutral-300/50 dark:bg-neutral-800/50 px-2 py-2 constrain-x">
+            <input type="text" class="grow reminder-input rounded-full" placeholder="Enter a new reminder" bind:value=text on:keydown=add_todo />
+            <button type="button" class="btn btn-blue btn-circle transition-all ml-2" class:functionally-hidden-x=move || text.get().trim().is_empty() on:click=move |_| {
                 let title = text.get();
                 let title = title.trim();
                 if !title.is_empty() {
