@@ -61,6 +61,7 @@ html, body {
 .container-reminder-input {
     @apply
     flex
+    justify-center
     absolute bottom-4 left-4 right-4
     h-12;
 }
@@ -69,7 +70,9 @@ html, body {
     @apply
     flex flex-row
     h-full w-full
+    max-w-xl
     backdrop-blur-sm
+    shadow-2xl
     rounded-full
     bg-neutral-300/50 dark:bg-neutral-800/50;
 }
