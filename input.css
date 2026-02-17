@@ -120,6 +120,10 @@ html, body {
     @apply border-solid rounded-full font-mono border-2 border-neutral-300 disabled:border-neutral-800;
 }
 
+.info-button {
+    @apply w-6 h-6 self-center border-solid border-2 border-blue-500 text-blue-500 hover:text-blue-300 hover:border-blue-300 rounded-full transition-all duration-150;
+}
+
 /* Text Inputs */
 
 .text-input {
