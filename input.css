@@ -140,6 +140,13 @@ html, body {
     @apply
     appearance-none
     bg-transparent
+    focus:outline-none
+}
+
+.new-reminder-input {
+    @apply
+    appearance-none
+    bg-transparent
     border-none
     w-full py-2 px-4
     text-neutral-700 dark:text-neutral-300 leading-tight

@@ -30,7 +30,7 @@ impl Reminder {
 
 #[component]
 pub fn ReminderWidget(reminder: Reminder) -> impl IntoView {
-    let id = reminder.id.clone();
+    // let id = reminder.id.clone();
     let set_user_data = use_context::<WriteSignal<UserData>>().unwrap();
 
     let on_reminder_change = move |ev| {
@@ -42,12 +42,34 @@ pub fn ReminderWidget(reminder: Reminder) -> impl IntoView {
         })
     };
 
+    let on_reminder_name_change = move |ev| {
+        set_user_data.update(|user_data| {
+            let title = event_target_value(&ev);
+            if let Some(reminder) = user_data.reminders_list.reminder_mut(reminder.id) {
+                reminder.title = title;
+            }
+        })
+    };
+
+    let due_date_fn = move || {
+        let due_date = reminder.due_date.clone();
+        let due_time = reminder.due_time.clone();
+        (!due_date.clone().is_empty() || !due_time.is_empty()).then(|| {
+            view! {
+                <p class="grow wrap-anywhere text-neutral-500">{due_date}{if due_time.is_empty() {String::new()} else {format!(", {}", due_time)}}</p>
+            }
+        })
+    };
+
     view! {
         <div draggable=true class="flex flex-row space-x-2 constrain-x">
             <ReminderCheckbox completed={reminder.completed} on_change=on_reminder_change />
-            <p class="grow py-2 px-2 wrap-anywhere">{reminder.title}</p>
-            <InfoButton reminder_id=id/>
-            <RemoveButton reminder_id=id/>
+            <div class="flex flex-col grow py-2 px-2">
+                <input type="text" class="grow wrap-anywhere reminder-input" value={reminder.title} on:change=on_reminder_name_change />
+                {due_date_fn}
+            </div>
+            // <InfoButton reminder_id=id/>
+            // <RemoveButton reminder_id=id/>
         </div>
     }
 }
