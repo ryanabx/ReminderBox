@@ -32,18 +32,6 @@
           });
       });
     }
-
-    // iOS Hacks?
-    function updateViewportHeight() {
-      const vh = window.visualViewport?.height || window.innerHeight;
-      document.documentElement.style.setProperty('--app-height', `${vh}px`);
-    }
-
-    window.visualViewport?.addEventListener('resize', updateViewportHeight);
-    window.addEventListener('resize', updateViewportHeight);
-
-    updateViewportHeight();
-
   </script>
 
 </body>
