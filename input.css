@@ -7,11 +7,13 @@ html {
 }
 
 html, body {
-    @apply w-dvw h-dvh overflow-hidden;
+    @apply w-dvw overflow-hidden; /* h-dvh */
+    height: var(--app-height)
 }
 
 .full-screen {
-    @apply w-dvw h-dvh;
+    @apply w-dvw; /* h-dvh */
+    height: var(--app-height)
 }
 
 /* Main Header/Subtitle & Header Bar */
