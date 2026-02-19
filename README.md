@@ -1,4 +1,7 @@
+
 # ReminderBox
+
+![ReminderBox Logo](./icons/android-chrome-192x192.png)
 
 ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/ryanabx/ReminderBox/gh-pages-deploy.yml)
 
