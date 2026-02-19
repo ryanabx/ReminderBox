@@ -1,11 +1,7 @@
-use leptos::{
-    ev,
-    html::{Button, Textarea},
-    prelude::*,
-};
+use leptos::{ev, html::Button, prelude::*};
 use serde::{Deserialize, Serialize};
 use uuid::Uuid;
-use web_sys::{Event, Node, wasm_bindgen::JsCast};
+use web_sys::{Event, KeyboardEvent, Node, wasm_bindgen::JsCast};
 
 use crate::{Page, data::UserData};
 
@@ -68,19 +64,20 @@ pub fn ReminderWidget(reminder: Reminder) -> impl IntoView {
 
     let (focused, set_focused) = signal(false);
 
-    // let effect = Effect::new(move |prev_value| {
-    //     if let Some(text_area) = text_area.get() {
-    //         fix_textarea_height()
-    //     }
-    // });
-
     view! {
         <div draggable=true class="flex flex-row space-x-2 constrain-x"
             on:focusin=move |_| set_focused.set(true)
             on:focusout=move |_| set_focused.set(false)>
             <ReminderCheckbox completed={reminder.completed} on_change=on_reminder_change />
             <div class="flex flex-col grow py-2 px-2">
-                <SensibleMultilineTextInput class="reminder-input".to_string() value={reminder.title} on_change=on_reminder_name_change />
+                <textarea class="resize-none field-sizing-content wrap-anywhere reminder-input"
+                prop:value={reminder.title}
+                on:keydown=move |ev: KeyboardEvent| {
+                    if ev.key() == "Enter" && !ev.get_modifier_state("Shift") {
+                        ev.prevent_default();
+                    }
+                }
+                on:input=on_reminder_name_change />
                 {due_date_fn}
             </div>
             <button class="info-button"
@@ -193,36 +190,5 @@ pub fn RemoveButton(reminder_id: Uuid) -> impl IntoView {
             // </div>
             </Show>
         </>
-    }
-}
-
-#[component]
-pub fn SensibleMultilineTextInput(
-    value: String,
-    mut on_change: impl FnMut(Event) + 'static,
-    class: String,
-) -> impl IntoView {
-    let text_area = NodeRef::<Textarea>::new();
-
-    let (value, set_value) = signal(value);
-
-    let _ = Effect::new(move |_| {
-        let _ = value.get();
-        if let Some(text_area) = text_area.get() {
-            (*text_area).style().set_property("height", "auto").unwrap();
-            let height = text_area.scroll_height();
-            (*text_area)
-                .style()
-                .set_property("height", &format!("{}px", height))
-                .unwrap();
-        }
-    });
-
-    view! {
-        <textarea node_ref=text_area class=format!("resize-none wrap-anywhere overflow-hidden {}", class) on:input=move |evt| {
-            let text = event_target_value(&evt);
-            set_value.set(text);
-            on_change(evt);
-        } >{value}</textarea>
     }
 }
