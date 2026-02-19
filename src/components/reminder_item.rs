@@ -1,60 +1,18 @@
 use leptos::{ev, html::Button, prelude::*};
-use serde::{Deserialize, Serialize};
 use uuid::Uuid;
-use web_sys::{Event, KeyboardEvent, Node, wasm_bindgen::JsCast};
+use web_sys::{KeyboardEvent, Node, wasm_bindgen::JsCast};
 
-use crate::{Page, data::UserData};
-
-#[derive(Clone, Debug, PartialEq, Eq, Deserialize, Serialize)]
-pub struct Reminder {
-    pub id: Uuid,
-    pub title: String,
-    pub notes: String,
-    pub completed: bool,
-    pub due_date: String,
-    pub due_time: String,
-}
-
-impl Reminder {
-    pub fn new(id: Uuid, title: String, completed: bool) -> Self {
-        Reminder {
-            id,
-            title,
-            notes: String::new(),
-            completed,
-            due_date: String::new(),
-            due_time: String::new(),
-        }
-    }
-}
+use crate::{Page, UserData, types::Reminder};
 
 #[component]
 pub fn ReminderWidget(reminder: Reminder) -> impl IntoView {
     // let id = reminder.id.clone();
-    let set_user_data = use_context::<WriteSignal<UserData>>().unwrap();
     let set_page = use_context::<WriteSignal<Page>>().unwrap();
-
-    let on_reminder_change = move |ev| {
-        set_user_data.update(|user_data| {
-            let checked = event_target_checked(&ev);
-            if let Some(reminder) = user_data.reminders_list.reminder_mut(reminder.id) {
-                reminder.completed = checked;
-            }
-        })
-    };
-
-    let on_reminder_name_change = move |ev| {
-        set_user_data.update(|user_data| {
-            let title = event_target_value(&ev);
-            if let Some(reminder) = user_data.reminders_list.reminder_mut(reminder.id) {
-                reminder.title = title;
-            }
-        })
-    };
+    let set_user_data = use_context::<WriteSignal<UserData>>().unwrap();
 
     let due_date_fn = move || {
-        let due_date = reminder.due_date.clone();
-        let due_time = reminder.due_time.clone();
+        let due_date = reminder.due_date.get();
+        let due_time = reminder.due_time.get();
         (!due_date.clone().is_empty() || !due_time.is_empty()).then(|| {
             view! {
                 <p class="grow wrap-anywhere text-neutral-500">{due_date}{if due_time.is_empty() {String::new()} else {format!(", {}", due_time)}}</p>
@@ -64,20 +22,32 @@ pub fn ReminderWidget(reminder: Reminder) -> impl IntoView {
 
     let (focused, set_focused) = signal(false);
 
+    let reminder_clone = reminder.clone();
+
+    Effect::new(move || {
+        if !focused.get() {
+            if reminder_clone.is_empty() {
+                set_user_data.update(|user_data| {
+                    user_data.reminders_list.remove_reminder(reminder.id);
+                });
+            }
+        }
+    });
+
     view! {
         <div draggable=true class="flex flex-row space-x-2 constrain-x"
             on:focusin=move |_| set_focused.set(true)
             on:focusout=move |_| set_focused.set(false)>
-            <ReminderCheckbox completed={reminder.completed} on_change=on_reminder_change />
+            <ReminderCheckbox completed={reminder.completed} />
             <div class="flex flex-col grow py-2 px-2">
                 <textarea class="resize-none field-sizing-content wrap-anywhere reminder-input"
-                prop:value={reminder.title}
+                bind:value=reminder.title
                 on:keydown=move |ev: KeyboardEvent| {
                     if ev.key() == "Enter" && !ev.get_modifier_state("Shift") {
                         ev.prevent_default();
                     }
                 }
-                on:input=on_reminder_name_change />
+                />
                 {due_date_fn}
             </div>
             <button class="info-button"
@@ -86,31 +56,21 @@ pub fn ReminderWidget(reminder: Reminder) -> impl IntoView {
             >
                 "i"
             </button>
-            // <InfoButton reminder_id=id/>
-            // <RemoveButton reminder_id=id/>
         </div>
     }
 }
 
 #[component]
-pub fn ReminderCheckbox(completed: bool, on_change: impl FnMut(Event) + 'static) -> impl IntoView {
+pub fn ReminderCheckbox(completed: RwSignal<bool>) -> impl IntoView {
     view! {
         <label class="flex items-center cursor-pointer space-x-3">
-        <input type="checkbox" class="hidden peer" checked=completed on:change=on_change />
-        <div class="w-6 h-6 rounded-full border-2 border-neutral-400 peer-checked:bg-blue-500 peer-checked:border-blue-500 transition-colors duration-150 flex items-center justify-center">
-            <svg class="w-3 h-3 {} text-white transition-opacity" class:opacity-0=move || {!completed} fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
-            </svg>
-        </div>
+            <input type="checkbox" class="hidden peer" bind:checked=completed />
+            <div class="w-6 h-6 rounded-full border-2 border-neutral-400 peer-checked:bg-blue-500 peer-checked:border-blue-500 transition-colors duration-150 flex items-center justify-center">
+                <svg class="w-3 h-3 {} text-white transition-opacity" class:opacity-0=move || {!completed.get()} fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                </svg>
+            </div>
         </label>
-    }
-}
-
-#[component]
-pub fn InfoButton(reminder_id: Uuid) -> impl IntoView {
-    let set_page = use_context::<WriteSignal<Page>>().unwrap();
-    view! {
-        <button class="btn btn-circle" on:click=move |_| {set_page.set(Page::Settings(reminder_id))}>"i"</button>
     }
 }
 

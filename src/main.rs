@@ -2,12 +2,11 @@ use leptos::prelude::*;
 use uuid::Uuid;
 
 use crate::{
-    components::{reminder_list::ReminderListWidget, reminder_settings::ReminderSettings},
-    data::UserData,
+    components::{reminder_list::ReminderListWidget, reminder_settings::ReminderSettings}, types::UserData,
 };
 
 pub mod components;
-pub mod data;
+pub mod types;
 
 fn main() {
     console_error_panic_hook::set_once();
@@ -24,7 +23,7 @@ pub enum Page {
 #[component]
 fn App() -> impl IntoView {
     // The `user data` is a signal, since we need to reactively update the list
-    let (user_data, set_user_data) = signal(UserData::new());
+    let (user_data, set_user_data) = signal(get_local_storage());
     // The current page we are on
     let (page, set_page) = signal(Page::default());
 
@@ -46,7 +45,7 @@ fn App() -> impl IntoView {
     // with something outside the reactive system (like localStorage)
 
     Effect::new(move |_| {
-        data::local_storage_effect(&user_data);
+        local_storage_effect(&user_data);
     });
 
     view! {
@@ -72,4 +71,30 @@ fn Header() -> impl IntoView {
             <h6 class="commit-info">{format!("Commit {}", commit_hash)}</h6>
         </div>
     }
+}
+
+pub const LOCAL_STORAGE_KEY: &str = "reminderbox";
+
+pub fn local_storage_effect(user_data: &ReadSignal<UserData>) {
+    if let Ok(Some(storage)) = window().local_storage() {
+        let json = serde_json::to_string(user_data).expect("couldn't serialize user data");
+        if storage.set_item(LOCAL_STORAGE_KEY, &json).is_err() {
+            leptos::logging::error!("error while trying to set item in localStorage");
+        }
+    }
+}
+
+pub fn get_local_storage() -> UserData {
+    window()
+        .local_storage()
+        .ok()
+        .flatten()
+        .and_then(|storage| {
+            storage
+                .get_item(LOCAL_STORAGE_KEY)
+                .ok()
+                .flatten()
+                .and_then(|value| serde_json::from_str::<UserData>(&value).ok())
+        })
+        .unwrap_or_default()
 }

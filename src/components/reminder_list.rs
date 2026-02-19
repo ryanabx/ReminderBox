@@ -1,34 +1,12 @@
 use leptos::prelude::*;
-use serde::{Deserialize, Serialize};
 use uuid::Uuid;
 use web_sys::KeyboardEvent;
 
 use crate::{
-    components::reminder_item::{Reminder, ReminderWidget},
-    data::UserData,
+    UserData,
+    components::reminder_item::ReminderWidget,
+    types::{Reminder, ReminderList},
 };
-
-#[derive(Clone, Debug, Default, PartialEq, Eq, Deserialize, Serialize)]
-pub struct ReminderList(Vec<Reminder>);
-
-impl ReminderList {
-    /// Add a new reminder
-    pub fn add_reminder(&mut self, reminder: Reminder) {
-        self.0.push(reminder);
-    }
-    /// Remove a reminder by uuid
-    pub fn remove_reminder(&mut self, id: Uuid) {
-        self.0.retain(|a| a.id != id);
-    }
-    /// Get a mutable reference to a reminder
-    pub fn reminder_mut(&mut self, id: Uuid) -> Option<&mut Reminder> {
-        self.0.iter_mut().find(|a| a.id == id)
-    }
-    /// Get a mutable reference to a reminder
-    pub fn reminder(&self, id: Uuid) -> Option<&Reminder> {
-        self.0.iter().find(|a| a.id == id)
-    }
-}
 
 #[component]
 pub fn ReminderListWidget(
