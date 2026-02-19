@@ -63,4 +63,14 @@ impl ReminderList {
     pub fn reminder(&self, id: Uuid) -> Option<&Reminder> {
         self.0.iter().find(|a| a.id == id)
     }
+    /// Insert a new blank reminder after this reminder
+    pub fn new_blank_after(&mut self, id: Uuid) {
+        let idx = self
+            .0
+            .iter()
+            .position(|r| r.id == id)
+            .unwrap_or(self.0.len().saturating_sub(1));
+        self.0
+            .insert(idx + 1, Reminder::new(Uuid::new_v4(), String::new(), false));
+    }
 }

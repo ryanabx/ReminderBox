@@ -55,7 +55,7 @@ html, body {
     flex flex-col
     w-full
     items-center
-    pb-16
+    pb-24
 }
 
 .container-reminder-input {
@@ -63,18 +63,17 @@ html, body {
     flex
     justify-center
     absolute bottom-4 left-4 right-4
-    h-12;
+    h-16;
 }
 
 .container-reminder-input-inner {
     @apply
-    flex flex-row
-    h-full w-full
+    flex
+    justify-end
+    w-full
+    h-full
     max-w-xl
-    backdrop-blur-sm
-    shadow-2xl
-    rounded-full
-    bg-neutral-300/50 dark:bg-neutral-800/50;
+    px-4
 }
 
 /* Buttons */

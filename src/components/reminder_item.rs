@@ -1,4 +1,8 @@
-use leptos::{ev, html::Button, prelude::*};
+use leptos::{
+    ev,
+    html::{Button, Textarea},
+    prelude::*,
+};
 use uuid::Uuid;
 use web_sys::{KeyboardEvent, Node, wasm_bindgen::JsCast};
 
@@ -10,6 +14,8 @@ pub fn ReminderWidget(reminder: Reminder) -> impl IntoView {
     let set_page = use_context::<WriteSignal<Page>>().unwrap();
     let set_user_data = use_context::<WriteSignal<UserData>>().unwrap();
 
+    let input_ref = NodeRef::<Textarea>::new();
+
     let due_date_fn = move || {
         let due_date = reminder.due_date.get();
         let due_time = reminder.due_time.get();
@@ -20,17 +26,44 @@ pub fn ReminderWidget(reminder: Reminder) -> impl IntoView {
         })
     };
 
+    let make_new_reminder = move || {
+        if input_ref
+            .get()
+            .is_some_and(|text_input| !text_input.value().is_empty())
+        {
+            set_user_data.update(|user_data| {
+                user_data.reminders_list.new_blank_after(reminder.id);
+            });
+        } else {
+            set_user_data.update(|user_data| {
+                user_data.reminders_list.remove_reminder(reminder.id);
+            });
+        }
+    };
+
     let (focused, set_focused) = signal(false);
+    let mounted = StoredValue::new(false);
 
     let reminder_clone = reminder.clone();
 
     Effect::new(move || {
-        if !focused.get() {
+        let focused = focused.get();
+        if !mounted.get_value() {
+            // Skip the first run (on mount)
+            mounted.set_value(true);
+            return;
+        } else if !focused {
             if reminder_clone.is_empty() {
                 set_user_data.update(|user_data| {
                     user_data.reminders_list.remove_reminder(reminder.id);
                 });
             }
+        }
+    });
+
+    Effect::new(move || {
+        if let Some(textarea) = input_ref.get() {
+            textarea.focus().ok();
         }
     });
 
@@ -40,11 +73,12 @@ pub fn ReminderWidget(reminder: Reminder) -> impl IntoView {
             on:focusout=move |_| set_focused.set(false)>
             <ReminderCheckbox completed={reminder.completed} />
             <div class="flex flex-col grow py-2 px-2">
-                <textarea class="resize-none field-sizing-content wrap-anywhere reminder-input"
+                <textarea node_ref=input_ref class="resize-none field-sizing-content wrap-anywhere reminder-input"
                 bind:value=reminder.title
                 on:keydown=move |ev: KeyboardEvent| {
                     if ev.key() == "Enter" && !ev.get_modifier_state("Shift") {
                         ev.prevent_default();
+                        make_new_reminder();
                     }
                 }
                 />

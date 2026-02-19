@@ -2,7 +2,8 @@ use leptos::prelude::*;
 use uuid::Uuid;
 
 use crate::{
-    components::{reminder_list::ReminderListWidget, reminder_settings::ReminderSettings}, types::UserData,
+    components::{reminder_list::ReminderListWidget, reminder_settings::ReminderSettings},
+    types::UserData,
 };
 
 pub mod components;
