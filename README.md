@@ -1,9 +1,8 @@
+![ReminderBox Logo](./reminderbox.svg)
 
-# ReminderBox
-
-![ReminderBox Logo](./icons/android-chrome-192x192.png)
-
-![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/ryanabx/ReminderBox/gh-pages-deploy.yml)
+<p align="center">
+<img alt="GitHub Actions Workflow Status" src="https://img.shields.io/github/actions/workflow/status/ryanabx/ReminderBox/gh-pages-deploy.yml">
+</p>
 
 ## A (WIP) PWA reminders app in your browser!
 

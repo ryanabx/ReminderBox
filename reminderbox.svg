@@ -2,9 +2,9 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   width="512"
-   height="512"
-   viewBox="0 0 135.46666 135.46667"
+   width="1600"
+   height="600"
+   viewBox="0 0 423.33331 158.75"
    version="1.1"
    id="svg1"
    inkscape:version="1.4.3 (0d15f75042, 2025-12-25)"
@@ -23,12 +23,12 @@
      borderopacity="0.25"
      inkscape:showpageshadow="2"
      inkscape:pageopacity="0.0"
-     inkscape:pagecheckerboard="0"
+     inkscape:pagecheckerboard="true"
      inkscape:deskcolor="#d1d1d1"
-     inkscape:document-units="mm"
-     inkscape:zoom="0.50922094"
-     inkscape:cx="354.46304"
-     inkscape:cy="203.25166"
+     inkscape:document-units="px"
+     inkscape:zoom="0.3913673"
+     inkscape:cx="760.15549"
+     inkscape:cy="540.41306"
      inkscape:window-width="1536"
      inkscape:window-height="888"
      inkscape:window-x="0"
@@ -39,20 +39,26 @@
     <inkscape:page
        x="0"
        y="0"
-       width="135.46666"
-       height="135.46667"
+       width="423.33331"
+       height="158.75"
        id="page2"
        margin="0"
        bleed="0" />
   </sodipodi:namedview>
   <defs
      id="defs1">
+    <rect
+       x="530.7395"
+       y="163.7829"
+       width="677.93683"
+       height="261.22336"
+       id="rect2" />
     <filter
        style="color-interpolation-filters:sRGB"
        inkscape:label="Drop Shadow"
        id="filter42"
-       x="-0.28388459"
-       y="-0.28388459"
+       x="-0.28388458"
+       y="-0.28388458"
        width="1.5677692"
        height="1.5677692">
       <feFlood
@@ -91,39 +97,98 @@
      inkscape:groupmode="layer"
      id="layer1">
     <g
-       id="g2"
-       transform="matrix(0.79139022,0,0,0.79139022,19.416419,14.129836)"
-       style="stroke-width:6.68654544;stroke-dasharray:none">
-      <path
-         style="fill:none;stroke:#333333;stroke-width:6.68654544;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4.6;stroke-dasharray:none;stroke-opacity:1"
-         d="M 43.404925,37.727205 H 110.16095"
-         id="path1" />
-      <circle
-         style="fill:#00ffff;stroke:#a6a6a6;stroke-width:6.68654544;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4.6;stroke-dasharray:none;stroke-opacity:1"
-         id="path2"
-         cx="22.443008"
-         cy="37.727207"
-         r="10.497538" />
-      <path
-         style="fill:none;stroke:#333333;stroke-width:6.68654544;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4.6;stroke-dasharray:none;stroke-opacity:1"
-         d="M 43.404927,67.733332 H 110.16095"
-         id="path1-2" />
-      <circle
-         style="fill:#00ffff;stroke:#a6a6a6;stroke-width:6.68654544;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4.6;stroke-dasharray:none;stroke-opacity:1"
-         id="path2-2"
-         cx="22.443008"
-         cy="67.733337"
-         r="10.497538" />
-      <path
-         style="fill:none;stroke:#333333;stroke-width:6.68654544;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4.6;stroke-dasharray:none;stroke-opacity:1"
-         d="M 43.404932,97.739461 H 110.16095"
-         id="path1-2-7" />
-      <circle
-         style="fill:#00ffff;stroke:#a6a6a6;stroke-width:6.68654544;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4.6;stroke-dasharray:none;stroke-opacity:1"
-         id="path2-2-8"
-         cx="22.443008"
-         cy="97.739464"
-         r="10.497538" />
+       id="g4"
+       inkscape:label="ReminderBoxBanner"
+       transform="translate(-5.0512074,-21.281253)">
+      <g
+         id="g1"
+         inkscape:label="ReminderBoxLogoWithBackground"
+         transform="matrix(0.67271157,0,0,0.67271157,22.456016,55.091087)">
+        <rect
+           style="fill:#ffffff;stroke-width:3.70417;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4.6;stroke-dasharray:none"
+           id="rect1"
+           width="135.46666"
+           height="135.46666"
+           x="0"
+           y="0"
+           inkscape:label="Background Rect" />
+        <g
+           id="g2"
+           transform="matrix(1.0853352,0,0,1.0853352,1.4701348,-5.7800375)"
+           style="stroke-width:6.68655;stroke-dasharray:none"
+           inkscape:label="Logo">
+          <path
+             style="fill:none;stroke:#333333;stroke-width:6.68655;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4.6;stroke-dasharray:none;stroke-opacity:1"
+             d="M 43.404925,37.727205 H 110.16095"
+             id="path1" />
+          <circle
+             style="fill:#00ffff;stroke:#a6a6a6;stroke-width:6.68655;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4.6;stroke-dasharray:none;stroke-opacity:1"
+             id="path2"
+             cx="22.443008"
+             cy="37.727207"
+             r="10.497538" />
+          <path
+             style="fill:none;stroke:#333333;stroke-width:6.68655;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4.6;stroke-dasharray:none;stroke-opacity:1"
+             d="M 43.404927,67.733332 H 110.16095"
+             id="path1-2" />
+          <circle
+             style="fill:#00ffff;stroke:#a6a6a6;stroke-width:6.68655;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4.6;stroke-dasharray:none;stroke-opacity:1"
+             id="path2-2"
+             cx="22.443008"
+             cy="67.733337"
+             r="10.497538" />
+          <path
+             style="fill:none;stroke:#333333;stroke-width:6.68655;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4.6;stroke-dasharray:none;stroke-opacity:1"
+             d="M 43.404932,97.739461 H 110.16095"
+             id="path1-2-7" />
+          <circle
+             style="fill:#00ffff;stroke:#a6a6a6;stroke-width:6.68655;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4.6;stroke-dasharray:none;stroke-opacity:1"
+             id="path2-2-8"
+             cx="22.443008"
+             cy="97.739464"
+             r="10.497538" />
+        </g>
+      </g>
+      <g
+         id="path3"
+         inkscape:label="Separator"
+         style="opacity:1;stroke:#ffffff;stroke-width:3.175;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill">
+        <path
+           style="baseline-shift:baseline;display:inline;overflow:visible;fill:#333333;stroke:#ffffff;stroke-width:3.175;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4.6;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill;enable-background:accumulate;stop-color:#000000;stop-opacity:1"
+           d="M 132.19681,41.688623 V 159.62354"
+           id="path5" />
+        <path
+           style="baseline-shift:baseline;display:inline;overflow:visible;stroke:#ffffff;stroke-width:3.175;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4.6;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill;enable-background:accumulate;stop-color:#000000;stop-opacity:1"
+           d="m 132.19727,40.101562 a 1.5875,1.5875 0 0 0 -1.5879,1.587891 V 159.62305 a 1.5875,1.5875 0 0 0 1.5879,1.58789 1.5875,1.5875 0 0 0 1.58789,-1.58789 V 41.689453 a 1.5875,1.5875 0 0 0 -1.58789,-1.587891 z"
+           id="path6" />
+      </g>
+      <g
+         id="g3"
+         inkscape:label="TitleAndSubtitle"
+         transform="translate(0.7278219,4.5745022)">
+        <text
+           xml:space="preserve"
+           style="font-size:42.3333px;writing-mode:lr-tb;direction:ltr;fill:#333333;fill-opacity:1;stroke:#ffffff;stroke-width:3.175;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4.6;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill"
+           x="147.69441"
+           y="97.719009"
+           id="text2"><tspan
+             sodipodi:role="line"
+             id="tspan2"
+             style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:42.3333px;font-family:'Adwaita Sans';-inkscape-font-specification:'Adwaita Sans Bold';fill:#333333;fill-opacity:1;stroke:#ffffff;stroke-width:3.175;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill"
+             x="147.69441"
+             y="97.719009">ReminderBox</tspan></text>
+        <text
+           xml:space="preserve"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:16.9333px;font-family:'Adwaita Sans';-inkscape-font-specification:'Adwaita Sans Bold';writing-mode:lr-tb;direction:ltr;fill:#333333;fill-opacity:1;stroke:#ffffff;stroke-width:3.175;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4.6;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill"
+           x="149.91443"
+           y="123.18863"
+           id="text3"><tspan
+             sodipodi:role="line"
+             id="tspan3"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16.9333px;font-family:'Adwaita Sans';-inkscape-font-specification:'Adwaita Sans';fill:#333333;fill-opacity:1;stroke:#ffffff;stroke-width:3.175;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill"
+             x="149.91443"
+             y="123.18863">Your reminders, in a box</tspan></text>
+      </g>
     </g>
   </g>
 </svg>
