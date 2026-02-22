@@ -3,11 +3,11 @@ use uuid::Uuid;
 
 use crate::{
     components::{reminder_list::ReminderListWidget, reminder_settings::ReminderSettings},
-    types::UserData,
+    user_data::UserData,
 };
 
 pub mod components;
-pub mod types;
+pub mod user_data;
 
 fn main() {
     console_error_panic_hook::set_once();

@@ -1,6 +1,6 @@
 use leptos::prelude::*;
 
-use crate::{Page, UserData, types::Reminder};
+use crate::{Page, UserData, user_data::Reminder};
 
 #[component]
 pub fn ReminderSettings(reminder: Reminder) -> impl IntoView {

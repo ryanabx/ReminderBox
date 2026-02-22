@@ -1,7 +1,7 @@
 use leptos::{html::Textarea, prelude::*};
 use web_sys::KeyboardEvent;
 
-use crate::{Page, UserData, types::Reminder};
+use crate::{Page, UserData, user_data::Reminder};
 
 #[component]
 pub fn ReminderWidget(reminder: Reminder) -> impl IntoView {

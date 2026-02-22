@@ -4,7 +4,7 @@ use uuid::Uuid;
 use crate::{
     UserData,
     components::reminder_item::ReminderWidget,
-    types::{Reminder, ReminderList},
+    user_data::{Reminder, ReminderList},
 };
 
 #[component]
