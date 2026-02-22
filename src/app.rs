@@ -3,7 +3,6 @@ use uuid::Uuid;
 
 use crate::{pages::reminders_page::RemindersPage, user_data::UserData};
 
-
 #[derive(Clone, Debug, Default)]
 pub enum Page {
     #[default]
@@ -43,7 +42,7 @@ pub fn App() -> impl IntoView {
         {
             move || match page.get() {
                 Page::Main => view! { <RemindersPage reminder_list=user_data.get().reminders/> }.into_any(),
-                Page::Settings(reminder) => view! { /*<ReminderSettings reminder=user_data.with(|d| d.reminders_list.reminder(reminder).unwrap().clone()) />*/ }.into_any(),
+                Page::Settings(_) => view! { /*<ReminderSettings reminder=user_data.with(|d| d.reminders_list.reminder(reminder).unwrap().clone()) />*/ }.into_any(),
             }
         }
     }

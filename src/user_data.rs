@@ -10,20 +10,18 @@ pub struct UserData {
 #[derive(Clone, Debug, Deserialize, Serialize)]
 pub struct Reminder {
     pub id: Uuid,
-    pub title: RwSignal<String>,
-    pub notes: RwSignal<String>,
-    pub completed: RwSignal<bool>,
-    pub due_date: RwSignal<String>,
-    pub due_time: RwSignal<String>,
+    pub title: String,
+    pub notes: String,
+    pub completed: bool,
+    pub due_date: String,
+    pub due_time: String,
 }
 
 impl Reminder {
     pub fn new(id: Uuid, title: String, completed: bool) -> Self {
-        let title = RwSignal::new(title);
-        let notes = RwSignal::new(String::new());
-        let completed = RwSignal::new(completed);
-        let due_date = RwSignal::new(String::new());
-        let due_time = RwSignal::new(String::new());
+        let notes = String::new();
+        let due_date = String::new();
+        let due_time = String::new();
         Reminder {
             id,
             title,
@@ -34,11 +32,10 @@ impl Reminder {
         }
     }
 
-    /// `true` if the `Reminder` is empty, `false` otherwise.
     pub fn is_empty(&self) -> bool {
-        self.title.get().is_empty()
-            && self.notes.get().is_empty()
-            && self.due_date.get().is_empty()
-            && self.due_time.get().is_empty()
+        self.title.is_empty()
+            && self.notes.is_empty()
+            && self.due_date.is_empty()
+            && self.due_time.is_empty()
     }
 }
