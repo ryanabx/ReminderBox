@@ -68,7 +68,7 @@ pub fn ReminderWidget(reminder: Reminder) -> impl IntoView {
             on:focusout=move |_| set_focused.set(false)>
             <ReminderCheckbox completed={reminder.completed} />
             <div class="flex flex-col grow py-2 px-2">
-                <textarea node_ref=input_ref class="resize-none field-sizing-content wrap-anywhere reminder-input"
+                <textarea node_ref=input_ref class="multiline-input reminder-input"
                 bind:value=reminder.title
                 on:keydown=move |ev: KeyboardEvent| {
                     if ev.key() == "Enter" && !ev.get_modifier_state("Shift") {

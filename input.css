@@ -113,3 +113,7 @@ html, body {
     bg-transparent
     focus:outline-none
 }
+
+.multiline-input {
+    @apply resize-none field-sizing-content wrap-anywhere;
+}
