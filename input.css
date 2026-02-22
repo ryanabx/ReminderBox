@@ -10,28 +10,6 @@ html, body {
     @apply w-dvw h-dvh overflow-hidden;
 }
 
-.full-screen {
-    @apply w-dvw h-dvh;
-}
-
-/* Main Header/Subtitle & Header Bar */
-
-.main-header {
-    @apply text-blue-500 font-bold text-center text-lg;
-}
-
-.main-subtitle {
-    @apply text-neutral-700 dark:text-neutral-200 italic text-center text-sm;
-}
-
-.commit-info {
-    @apply text-neutral-400 dark:text-neutral-600 italic text-center text-xs;
-}
-
-.headerbar {
-    @apply text-black dark:text-white;
-}
-
 /* Containers */
 
 .toplevel-container {
@@ -47,7 +25,10 @@ html, body {
 }
 
 .container-alt {
-    @apply bg-neutral-300 dark:bg-neutral-900 rounded-2xl px-2 py-6;
+    @apply bg-neutral-300 dark:bg-neutral-900
+    shadow-2xl
+    drop-shadow-black dark:drop-shadow-white
+    rounded-2xl px-4 py-6;
 }
 
 .container-reminder-list {
@@ -98,25 +79,12 @@ html, body {
     disabled:opacity-50 disabled:cursor-not-allowed;
 }
 
-.btn-red {
-    @apply
-    bg-red-500 text-white font-bold
-    hover:bg-red-700
-    active:bg-red-700
-    disabled:bg-red-500 disabled:text-white
-    disabled:opacity-50 disabled:cursor-not-allowed;
-}
-
 .btn-circle {
     @apply rounded-full aspect-square;
 }
 
 .remove-button {
     @apply aspect-square self-center shrink border-none cursor-pointer text-black dark:text-white rounded-full bg-transparent hover:bg-red-200 active:bg-red-400 dark:bg-transparent dark:hover:bg-red-500 dark:active:bg-red-700 transition-all duration-75 touch-manipulation font-mono;
-}
-
-.add-button {
-    @apply border-solid rounded-full font-mono border-2 border-neutral-300 disabled:border-neutral-800;
 }
 
 .info-button {
@@ -144,30 +112,4 @@ html, body {
     appearance-none
     bg-transparent
     focus:outline-none
-}
-
-.new-reminder-input {
-    @apply
-    appearance-none
-    bg-transparent
-    border-none
-    w-full py-2 px-4
-    text-neutral-700 dark:text-neutral-300 leading-tight
-    focus:outline-none transition-all duration-150;
-}
-
-.functionally-hidden-x {
-    @apply
-    opacity-0
-    max-w-0
-    px-0
-    mx-0
-}
-
-.functionally-hidden-y {
-    @apply
-    opacity-0
-    max-h-0
-    py-0
-    my-0
 }

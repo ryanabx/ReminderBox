@@ -50,27 +50,12 @@ fn App() -> impl IntoView {
     });
 
     view! {
-        // <Header />
         {
             move || match page.get() {
                 Page::Main => view! { <ReminderListWidget reminder_list=move || user_data.with(|d| d.reminders_list.clone())/> }.into_any(),
                 Page::Settings(reminder) => view! { <ReminderSettings reminder=user_data.with(|d| d.reminders_list.reminder(reminder).unwrap().clone()) /> }.into_any(),
             }
         }
-    }
-}
-
-#[component]
-fn Header() -> impl IntoView {
-    let commit_hash = env!("GIT_COMMIT_HASH");
-    view! {
-        <div class="flex flex-col w-full headerbar">
-            <div class="flex flex-row w-full grow justify-center space-x-1 items-center">
-                <h1 class="main-header">"ReminderBox"</h1>
-                <h2 class="main-subtitle">"- Your reminders in a box :)"</h2>
-            </div>
-            <h6 class="commit-info">{format!("Commit {}", commit_hash)}</h6>
-        </div>
     }
 }
 
