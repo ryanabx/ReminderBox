@@ -40,7 +40,6 @@ pub fn ReminderWidget(reminder: Reminder) -> impl IntoView {
     let mounted = StoredValue::new(false);
 
     let reminder_clone = reminder.clone();
-
     Effect::new(move || {
         let focused = focused.get();
         if !mounted.get_value() {
@@ -62,6 +61,7 @@ pub fn ReminderWidget(reminder: Reminder) -> impl IntoView {
         }
     });
 
+    let reminder_clone_2 = reminder.clone();
     view! {
         <div draggable=true class="flex flex-row space-x-2 constrain-x"
             on:focusin=move |_| set_focused.set(true)
@@ -74,6 +74,14 @@ pub fn ReminderWidget(reminder: Reminder) -> impl IntoView {
                     if ev.key() == "Enter" && !ev.get_modifier_state("Shift") {
                         ev.prevent_default();
                         make_new_reminder();
+                    }
+                    if ev.key() == "Backspace" && !ev.get_modifier_state("Shift") && !ev.get_modifier_state("Control") {
+                        if reminder_clone_2.is_empty() {
+                            ev.prevent_default();
+                            set_user_data.update(|user_data| {
+                                user_data.reminders_list.remove_reminder(reminder.id);
+                            });
+                        }
                     }
                 }
                 />
