@@ -90,22 +90,22 @@ pub fn ReminderContainer(
     let mounted = StoredValue::new(false);
 
     // If focus is gone and the reminder is empty, delete the reminder
-    Effect::new(move || {
-        let focused = focused.get();
-        if !mounted.get_value() {
-            // Skip the first run (on mount)
-            mounted.set_value(true);
-            return;
-        } else if !focused {
-            if reminder.title.get().is_empty()
-                && reminder.notes.get().is_empty()
-                && reminder.due_date.get().is_empty()
-                && reminder.due_time.get().is_empty()
-            {
-                remove_reminder(reminder_list, reminder_id, next_focus);
-            }
-        }
-    });
+    // Effect::new(move || {
+    //     let focused = focused.get();
+    //     if !mounted.get_value() {
+    //         // Skip the first run (on mount)
+    //         mounted.set_value(true);
+    //         return;
+    //     } else if !focused {
+    //         if reminder.title.get().is_empty()
+    //             && reminder.notes.get().is_empty()
+    //             && reminder.due_date.get().is_empty()
+    //             && reminder.due_time.get().is_empty()
+    //         {
+    //             remove_reminder(reminder_list, reminder_id, next_focus);
+    //         }
+    //     }
+    // });
 
     // Handle focus requests
     Effect::new(move || {
@@ -156,7 +156,7 @@ fn remove_reminder(
 ) {
     let idx = reminders.with(|reminders| reminders.iter().position(|r| r.id == id).unwrap());
     let next_uuid = reminders.with(|reminders| reminders.get(idx.saturating_sub(1)).map(|r| r.id));
-    reminders.update(|reminders| reminders.retain(|r| r.id == id));
+    reminders.update(|reminders| reminders.retain(|r| r.id != id));
     next_focus.set(next_uuid);
 }
 
