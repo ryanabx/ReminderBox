@@ -1,9 +1,12 @@
-use leptos::prelude::*;
+use leptos::{logging, prelude::*};
 use uuid::Uuid;
 
 use crate::{
     app::Page,
-    user_data::{Reminder, get_reminder, update_reminder},
+    user_data::{
+        DueDate, Reminder, datetime_local_to_utc, get_reminder, update_reminder,
+        utc_to_input_string,
+    },
 };
 
 #[component]
@@ -35,34 +38,75 @@ pub fn ReminderSettings(
                         update_reminder(reminder_list, reminder_id, |r| r.notes = value);
                     } />
                 </div>
-                <div>
+                <div class="flex flex-col space-y-1">
                     <h1>"Date & Time"</h1>
                     <div class="flex flex-col space-y-2 container-alt">
+                        <select name="repeat-style" id="repeat-style"
+                            prop:value=move || {
+                                get_reminder(reminder_list, reminder_id).map(|r| r.due_date.to_category()).unwrap_or(String::from("none"))
+                            }
+                            on:input=move |evt| {
+                                let value = event_target_value(&evt);
+                                logging::log!("Setting value to {}", &value);
+                                update_reminder(reminder_list, reminder_id, |r| r.due_date = DueDate::new_from_string(&value));
+                            }
+                        >
+                            <option value="none">"No due date"</option>
+                            <option value="once">"One-time due date"</option>
+                            <option value="interval">"Recurring Reminder"</option>
+                            <option value="recuraftercompletion">"Recurring Reminder (After Completion)"</option>
+                        </select>
                         <div class="flex flex-row space-x-2">
-                            <input type="date" class="grow" prop:value=move || {
-                                get_reminder(reminder_list, reminder_id).map(|r| r.due_date).unwrap_or_default()
-                            } on:input=move |ev| {
-                                let value = event_target_value(&ev);
-                                update_reminder(reminder_list, reminder_id, |r| r.due_date = value);
-                            } />
-                            <button class="remove-button" on:click=move |_| {
-                                update_reminder(reminder_list, reminder_id, |r| r.due_date = String::new());
-                            }>X</button>
-                        </div>
-                        <div class="flex flex-row space-x-2">
-                            <input type="time" class="grow" prop:value=move || {
-                                get_reminder(reminder_list, reminder_id).map(|r| r.due_time).unwrap_or_default()
-                            } on:input=move |ev| {
-                                let value = event_target_value(&ev);
-                                update_reminder(reminder_list, reminder_id, |r| r.due_time = value);
-                            } />
-                            <button class="remove-button" on:click=move |_| {
-                                update_reminder(reminder_list, reminder_id, |r| r.due_time = String::new());
-                            }>X</button>
+                            <ReminderDateTimeSection reminder_id reminder_list/>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
+    }
+}
+
+#[component]
+pub fn ReminderDateTimeSection(
+    reminder_id: Uuid,
+    reminder_list: RwSignal<Vec<Reminder>>,
+) -> impl IntoView {
+    view! {
+        <div>
+        {
+            move || {
+                let due_date = get_reminder(reminder_list, reminder_id).map(|r| r.due_date);
+                logging::log!("Due date changed!");
+                let view = due_date.map(|due_date| {
+                    match due_date {
+                        DueDate::None => view! {
+                            <></>
+                        }.into_any(),
+                        DueDate::Once { due } => view! {
+                                <>
+                                <input type="datetime-local" class="grow" prop:value=move || {
+                                    let input_string = utc_to_input_string(due);
+                                    logging::log!("{}", input_string);
+                                    input_string
+                                } on:input=move |ev| {
+                                    let value = event_target_value(&ev);
+                                    update_reminder(reminder_list, reminder_id, |r| r.due_date = DueDate::Once { due: datetime_local_to_utc(&value).unwrap_or_default() });
+                                } />
+                                </>
+                            }.into_any(),
+                        DueDate::Interval { orig_due, interval } => view! {
+                            <></>
+                        }.into_any(),
+                        DueDate::RecurAfterCompletion { orig_due, last_completion, interval } => view! {
+                            <></>
+                        }.into_any(),
+                    }
+                }).unwrap_or(view! {
+                    <></>
+                }.into_any());
+                view.into_view()
+            }
+        }
         </div>
     }
 }
