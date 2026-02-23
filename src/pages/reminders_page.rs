@@ -175,7 +175,7 @@ fn new_blank_reminder(
     let idx = id_after
         .and_then(|id_after| reminders.get().iter().position(|r| r.id == id_after))
         .map(|idx| idx.saturating_add(1))
-        .unwrap_or(reminders_len.saturating_sub(1));
+        .unwrap_or(reminders_len);
     let new_uuid = Uuid::new_v4();
     reminders.update(|reminders| {
         // NOTE: The Reminder struct used to have RwSignals for its values, which caused problems with running
