@@ -31,12 +31,34 @@ html, body {
     rounded-2xl px-4 py-6;
 }
 
+.container-reminder-list-header {
+    @apply
+    flex
+    justify-center
+    absolute top-0 left-0 right-0
+    h-12
+}
+
+.container-reminder-list-header-inner {
+    @apply
+    flex
+    grow
+    w-full
+    justify-center
+    items-center
+    max-w-xl
+    bg-neutral-400/20
+    dark:bg-neutral-800/20
+    backdrop-blur-sm
+}
+
 .container-reminder-list {
     @apply
     flex flex-col
     w-full
     items-center
     pb-24
+    pt-12
 }
 
 .container-reminder-input {

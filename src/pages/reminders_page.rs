@@ -19,6 +19,11 @@ pub fn RemindersPage(reminder_list: RwSignal<Vec<Reminder>>) -> impl IntoView {
         }
     };
     view! {
+        <div class="container-reminder-list-header">
+            <div class="container-reminder-list-header-inner">
+                <h1 class="font-bold text-2xl">"Reminders"</h1>
+            </div>
+        </div>
         <div class="toplevel-container scroll-container">
             <ul class="container-reminder-list">
                 <For each=move || reminder_list.get() key=|reminder| reminder.id children=reminder_to_widget>
