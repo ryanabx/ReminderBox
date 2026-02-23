@@ -133,12 +133,18 @@ pub fn ReminderContainer(
                 />
                 {move || {
                     let due_date = get_reminder(reminder_list, reminder_id).map(|r| r.due_date).unwrap_or_default();
-                    let due_time = get_reminder(reminder_list, reminder_id).map(|r| r.due_time).unwrap_or_default();
-                    (!due_date.clone().is_empty() || !due_time.is_empty()).then(|| {
-                        view! {
-                            <p class="grow wrap-anywhere text-neutral-500">{due_date}{if due_time.is_empty() {String::new()} else {format!(", {}", due_time)}}</p>
-                        }
-                    })
+                    match due_date {
+                        crate::user_data::DueDate::None => None,
+                        crate::user_data::DueDate::Once { due } => {
+                            Some(
+                                view! {
+                                    <p class="grow wrap-anywhere text-neutral-500">{due.to_string()}</p>
+                                }
+                            )
+                        },
+                        crate::user_data::DueDate::Interval { orig_due, interval } => todo!(),
+                        crate::user_data::DueDate::RecurAfterCompletion { orig_due, last_completion, interval } => todo!(),
+                    }
                 }}
             </div>
             <button class="info-button"
