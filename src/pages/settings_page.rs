@@ -1,52 +1,68 @@
-// use leptos::prelude::*;
+use leptos::prelude::*;
+use uuid::Uuid;
 
-// use crate::{Page, UserData, user_data::Reminder};
+use crate::{
+    app::Page,
+    user_data::{Reminder, get_reminder, update_reminder},
+};
 
-// #[component]
-// pub fn ReminderSettings(reminder: Reminder) -> impl IntoView {
-//     let set_page = use_context::<WriteSignal<Page>>().unwrap();
-//     let set_user_data = use_context::<WriteSignal<UserData>>().unwrap();
+#[component]
+pub fn ReminderSettings(
+    reminder_id: Uuid,
+    reminder_list: RwSignal<Vec<Reminder>>,
+) -> impl IntoView {
+    let set_page = use_context::<WriteSignal<Page>>().unwrap();
 
-//     let on_clear_reminder_date = move |_| {
-//         set_user_data.update(|user_data| {
-//             if let Some(reminder) = user_data.reminders_list.reminder_mut(reminder.id) {
-//                 reminder.due_date.set(String::new());
-//             }
-//         });
-//     };
-
-//     let on_clear_reminder_time = move |_| {
-//         set_user_data.update(|user_data| {
-//             if let Some(reminder) = user_data.reminders_list.reminder_mut(reminder.id) {
-//                 reminder.due_time.set(String::new());
-//             }
-//         });
-//     };
-
-//     view! {
-//         <div class="toplevel-container space-y-4">
-//             <div class="max-w-xl w-full flex flex-col space-y-2">
-//                 <div class="flex flex-row w-full container-alt justify-end">
-//                     <button class="btn mx-2" on:click=move |_| {set_page.set(Page::Main)}>"Done"</button>
-//                 </div>
-//                 <div class="flex flex-col space-y-2 container-alt">
-//                     <textarea id="reminder-name" class="grow standard-input multiline-input text-xl" placeholder="Reminder" bind:value={reminder.title} />
-//                     <textarea id="reminder-notes" class="grow standard-input multiline-input text-sm" placeholder="Notes" bind:value={reminder.notes} />
-//                 </div>
-//                 <div>
-//                     <h1>"Date & Time"</h1>
-//                     <div class="flex flex-col space-y-2 container-alt">
-//                         <div class="flex flex-row space-x-2">
-//                             <input type="date" class="grow" bind:value={reminder.due_date} />
-//                             <button class="remove-button" on:click=on_clear_reminder_date>X</button>
-//                         </div>
-//                         <div class="flex flex-row space-x-2">
-//                             <input type="time" class="grow" bind:value={reminder.due_time} />
-//                             <button class="remove-button" on:click=on_clear_reminder_time>X</button>
-//                         </div>
-//                     </div>
-//                 </div>
-//             </div>
-//         </div>
-//     }
-// }
+    view! {
+        <div class="toplevel-container space-y-4">
+            <div class="max-w-xl w-full flex flex-col space-y-2">
+                <div class="flex flex-row w-full container-alt justify-end">
+                    <button class="btn mx-2" on:click=move |_| {set_page.set(Page::Main)}>"Done"</button>
+                </div>
+                <div class="flex flex-col space-y-2 container-alt">
+                    <textarea id="reminder-name" class="grow standard-input multiline-input text-xl" placeholder="Reminder"
+                    prop:value=move || {
+                        get_reminder(reminder_list, reminder_id).map(|r| r.title).unwrap_or_default()
+                    } on:input=move |ev| {
+                        let value = event_target_value(&ev);
+                        update_reminder(reminder_list, reminder_id, |r| r.title = value);
+                    } />
+                    <textarea id="reminder-notes" class="grow standard-input multiline-input text-sm" placeholder="Notes"
+                    prop:value=move || {
+                        get_reminder(reminder_list, reminder_id).map(|r| r.notes).unwrap_or_default()
+                    } on:input=move |ev| {
+                        let value = event_target_value(&ev);
+                        update_reminder(reminder_list, reminder_id, |r| r.notes = value);
+                    } />
+                </div>
+                <div>
+                    <h1>"Date & Time"</h1>
+                    <div class="flex flex-col space-y-2 container-alt">
+                        <div class="flex flex-row space-x-2">
+                            <input type="date" class="grow" prop:value=move || {
+                                get_reminder(reminder_list, reminder_id).map(|r| r.due_date).unwrap_or_default()
+                            } on:input=move |ev| {
+                                let value = event_target_value(&ev);
+                                update_reminder(reminder_list, reminder_id, |r| r.due_date = value);
+                            } />
+                            <button class="remove-button" on:click=move |_| {
+                                update_reminder(reminder_list, reminder_id, |r| r.due_date = String::new());
+                            }>X</button>
+                        </div>
+                        <div class="flex flex-row space-x-2">
+                            <input type="time" class="grow" prop:value=move || {
+                                get_reminder(reminder_list, reminder_id).map(|r| r.due_time).unwrap_or_default()
+                            } on:input=move |ev| {
+                                let value = event_target_value(&ev);
+                                update_reminder(reminder_list, reminder_id, |r| r.due_time = value);
+                            } />
+                            <button class="remove-button" on:click=move |_| {
+                                update_reminder(reminder_list, reminder_id, |r| r.due_time = String::new());
+                            }>X</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+}

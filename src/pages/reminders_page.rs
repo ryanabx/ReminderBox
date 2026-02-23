@@ -2,7 +2,10 @@ use leptos::{html::Textarea, prelude::*};
 use uuid::Uuid;
 use web_sys::KeyboardEvent;
 
-use crate::{app::Page, user_data::Reminder};
+use crate::{
+    app::Page,
+    user_data::{Reminder, get_reminder, update_reminder},
+};
 
 #[component]
 pub fn RemindersPage(reminder_list: RwSignal<Vec<Reminder>>) -> impl IntoView {
@@ -63,12 +66,10 @@ pub fn ReminderContainer(
             mounted.set_value(true);
             return;
         } else if !focused {
-            if reminder_list.with(|list| {
-                list.iter()
-                    .find(|r| r.id == reminder_id)
-                    .map(|r| r.is_empty())
-                    .unwrap_or_default()
-            }) {
+            if get_reminder(reminder_list, reminder_id)
+                .map(|r| r.is_empty())
+                .unwrap_or_default()
+            {
                 remove_reminder(reminder_list, reminder_id, next_focus);
             }
         }
@@ -82,31 +83,17 @@ pub fn ReminderContainer(
                 <input type="checkbox"
                     class="hidden peer"
                     prop:checked=move || {
-                        reminder_list.with(|list| {
-                            list.iter()
-                                .find(|r| r.id == reminder_id)
-                                .map(|r| r.completed.clone())
-                                .unwrap_or_default()
-                        })
+                        get_reminder(reminder_list, reminder_id).map(|r| r.completed).unwrap_or_default()
                     }
                     on:input=move |ev| {
                         let checked = event_target_checked(&ev);
-                        reminder_list.update(|list| {
-                            if let Some(r) = list.iter_mut().find(|r| r.id == reminder_id) {
-                                r.completed = checked;
-                            }
-                        });
+                        update_reminder(reminder_list, reminder_id, |r| r.completed = checked);
                     }
                 />
                 <div class="w-6 h-6 rounded-full border-2 border-neutral-400 peer-checked:bg-blue-500 peer-checked:border-blue-500 transition-colors duration-150 flex items-center justify-center">
                     <svg class="w-3 h-3 {} text-white transition-opacity"
                         class:opacity-0=move || {
-                            reminder_list.with(|list| {
-                                list.iter()
-                                .find(|r| r.id == reminder_id)
-                                .map(|r| !r.completed.clone())
-                                .unwrap_or_default()
-                            })
+                            get_reminder(reminder_list, reminder_id).map(|r| !r.completed).unwrap_or_default()
                         }
                         fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
@@ -116,20 +103,11 @@ pub fn ReminderContainer(
             <div class="flex flex-col grow py-2 px-2">
                 <textarea node_ref=input_ref class="multiline-input reminder-input"
                 prop:value=move || {
-                    reminder_list.with(|list| {
-                        list.iter()
-                            .find(|r| r.id == reminder_id)
-                            .map(|r| r.title.clone())
-                            .unwrap_or_default()
-                    })
+                    get_reminder(reminder_list, reminder_id).map(|r| r.title).unwrap_or_default()
                 }
                 on:input = move |ev| {
                     let value = event_target_value(&ev);
-                    reminder_list.update(|list| {
-                        if let Some(r) = list.iter_mut().find(|r| r.id == reminder_id) {
-                            r.title = value;
-                        }
-                    });
+                    update_reminder(reminder_list, reminder_id, |r| r.title = value);
                 }
                 on:keydown=move |ev: KeyboardEvent| {
                     if ev.key() == "Enter" && !ev.get_modifier_state("Shift") {
@@ -140,12 +118,7 @@ pub fn ReminderContainer(
                         && !ev.get_modifier_state("Shift")
                         && !ev.get_modifier_state("Control")
                     {
-                        if reminder_list.with(|list| {
-                            list.iter()
-                                .find(|r| r.id == reminder_id)
-                                .map(|r| r.is_empty())
-                                .unwrap_or_default()
-                        })
+                        if get_reminder(reminder_list, reminder_id).map(|r| r.is_empty()).unwrap_or_default()
                         {
                             ev.prevent_default();
                             remove_reminder(reminder_list, reminder_id, next_focus);
@@ -154,18 +127,8 @@ pub fn ReminderContainer(
                 }
                 />
                 {move || {
-                    let due_date = reminder_list.with(|list| {
-                            list.iter()
-                                .find(|r| r.id == reminder_id)
-                                .map(|r| r.due_date.clone())
-                                .unwrap_or_default()
-                        });
-                    let due_time = reminder_list.with(|list| {
-                            list.iter()
-                                .find(|r| r.id == reminder_id)
-                                .map(|r| r.due_time.clone())
-                                .unwrap_or_default()
-                        });
+                    let due_date = get_reminder(reminder_list, reminder_id).map(|r| r.due_date).unwrap_or_default();
+                    let due_time = get_reminder(reminder_list, reminder_id).map(|r| r.due_time).unwrap_or_default();
                     (!due_date.clone().is_empty() || !due_time.is_empty()).then(|| {
                         view! {
                             <p class="grow wrap-anywhere text-neutral-500">{due_date}{if due_time.is_empty() {String::new()} else {format!(", {}", due_time)}}</p>

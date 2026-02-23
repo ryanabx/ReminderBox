@@ -39,3 +39,19 @@ impl Reminder {
             && self.due_time.is_empty()
     }
 }
+
+pub fn update_reminder(
+    reminders: RwSignal<Vec<Reminder>>,
+    id: Uuid,
+    f: impl FnOnce(&mut Reminder),
+) {
+    reminders.update(|list| {
+        if let Some(r) = list.iter_mut().find(|r| r.id == id) {
+            f(r);
+        }
+    });
+}
+
+pub fn get_reminder(reminders: RwSignal<Vec<Reminder>>, id: Uuid) -> Option<Reminder> {
+    reminders.with(|list| list.iter().find(|r| r.id == id).cloned())
+}
