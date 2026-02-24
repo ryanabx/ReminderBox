@@ -1,4 +1,4 @@
-use chrono::{DateTime, Duration, Local, NaiveDateTime, TimeZone, Utc};
+use chrono::{DateTime, Duration, Local, NaiveDateTime, TimeZone, Timelike, Utc};
 use leptos::prelude::*;
 use serde::{Deserialize, Serialize};
 use uuid::Uuid;
@@ -39,14 +39,44 @@ impl DueDate {
     pub fn new_from_string(s: &str) -> Self {
         match s {
             "none" => Self::None,
-            "once" => Self::Once { due: Utc::now() },
+            "once" => Self::Once {
+                due: Utc::now()
+                    .with_minute(0)
+                    .unwrap()
+                    .with_second(0)
+                    .unwrap()
+                    .with_nanosecond(0)
+                    .unwrap()
+                    + Duration::hours(1),
+            },
             "interval" => Self::Interval {
-                orig_due: Utc::now(),
+                orig_due: Utc::now()
+                    .with_minute(0)
+                    .unwrap()
+                    .with_second(0)
+                    .unwrap()
+                    .with_nanosecond(0)
+                    .unwrap()
+                    + Duration::hours(1),
                 interval: Duration::weeks(1),
             },
             "recuraftercompletion" => Self::RecurAfterCompletion {
-                orig_due: Utc::now(),
-                last_completion: Utc::now(),
+                orig_due: Utc::now()
+                    .with_minute(0)
+                    .unwrap()
+                    .with_second(0)
+                    .unwrap()
+                    .with_nanosecond(0)
+                    .unwrap()
+                    + Duration::hours(1),
+                last_completion: Utc::now()
+                    .with_minute(0)
+                    .unwrap()
+                    .with_second(0)
+                    .unwrap()
+                    .with_nanosecond(0)
+                    .unwrap()
+                    + Duration::hours(1),
                 interval: Duration::weeks(1),
             },
             _ => Self::None, // Default to None
