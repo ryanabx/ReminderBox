@@ -17,7 +17,12 @@ pub fn ReminderSettings(
     let set_page = use_context::<WriteSignal<Page>>().unwrap();
 
     view! {
-        <div class="toplevel-container space-y-4">
+        <div class="container-reminder-list-header">
+            <div class="container-reminder-list-header-inner">
+                <h1 class="font-bold text-xl">"Details"</h1>
+            </div>
+        </div>
+        <div class="toplevel-container space-y-4 accomodate-header">
             <div class="max-w-xl w-full flex flex-col space-y-2">
                 <div class="flex flex-row w-full container-alt justify-end">
                     <button class="btn mx-2" on:click=move |_| {set_page.set(Page::Main)}>"Done"</button>
