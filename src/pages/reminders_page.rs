@@ -32,7 +32,14 @@ pub fn RemindersPage(reminder_list: RwSignal<Vec<Reminder>>) -> impl IntoView {
         </div>
         <div class="container-reminder-input">
             <div class="container-reminder-input-inner">
-                <button type="button" class="btn btn-blue font-bold btn-circle text-3xl transition-all ml-2" on:click=new_reminder>+</button>
+                <button type="button" class="btn btn-blue font-bold btn-circle text-3xl transition-all ml-2 flex justify-center items-center" on:click=new_reminder>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                </button>
             </div>
         </div>
     }

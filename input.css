@@ -57,7 +57,7 @@ html, body {
     flex flex-col
     w-full
     items-center
-    pb-24
+    pb-18
     pt-12
 }
 
@@ -65,8 +65,8 @@ html, body {
     @apply
     flex
     justify-center
-    absolute bottom-4 left-4 right-4
-    h-16;
+    absolute bottom-6 left-6 right-6
+    h-12;
 }
 
 .container-reminder-input-inner {
@@ -76,7 +76,6 @@ html, body {
     w-full
     h-full
     max-w-xl
-    px-4
 }
 
 /* Buttons */
@@ -102,7 +101,7 @@ html, body {
 }
 
 .btn-circle {
-    @apply rounded-full aspect-square;
+    @apply rounded-full aspect-square p-0;
 }
 
 .remove-button {
