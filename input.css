@@ -53,6 +53,12 @@ body {
     flex
     justify-center
     absolute top-0 left-0 right-0
+    bg-neutral-100
+    dark:bg-neutral-900
+    border-b-2
+    border-neutral-950/20
+    dark:border-white/20
+    backdrop-blur-sm
     h-12;
 }
 
@@ -61,14 +67,10 @@ body {
     flex
     grow
     w-full
-    justify-center
+    justify-between
     items-center
-    bg-neutral-100
-    dark:bg-neutral-900
-    border-b-2
-    border-neutral-950/20
-    dark:border-white/20
-    backdrop-blur-sm;
+    px-4
+    max-w-xl;
 }
 
 .container-reminder-list {

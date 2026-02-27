@@ -19,14 +19,13 @@ pub fn ReminderSettings(
     view! {
         <div class="container-reminder-list-header">
             <div class="container-reminder-list-header-inner">
+                <button class="btn opacity-0" disabled=true>"Done"</button> // Hidden button to make header centered
                 <h1 class="font-bold text-xl">"Details"</h1>
+                <button class="btn" on:click=move |_| {set_page.set(Page::Main)}>"Done"</button>
             </div>
         </div>
         <div class="toplevel-container space-y-4 accomodate-header">
             <div class="max-w-xl w-full flex flex-col space-y-2">
-                <div class="flex flex-row w-full container-alt justify-end">
-                    <button class="btn mx-2" on:click=move |_| {set_page.set(Page::Main)}>"Done"</button>
-                </div>
                 <div class="flex flex-col space-y-2 container-alt">
                     <textarea id="reminder-name" class="grow standard-input multiline-input text-xl" placeholder="Reminder"
                     prop:value=move || {
