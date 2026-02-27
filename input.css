@@ -36,7 +36,7 @@ html, body {
     flex
     justify-center
     absolute top-0 left-0 right-0
-    h-12
+    h-14
 }
 
 .container-reminder-list-header-inner {
@@ -48,6 +48,9 @@ html, body {
     items-center
     bg-neutral-400/20
     dark:bg-neutral-800/20
+    border-b-2
+    border-neutral-950/20
+    dark:border-white/20
     backdrop-blur-sm
 }
 
@@ -57,7 +60,7 @@ html, body {
     w-full
     items-center
     pb-18
-    pt-12
+    pt-14
 }
 
 .container-reminder-input {
