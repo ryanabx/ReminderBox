@@ -1,3 +1,4 @@
+use chrono::Duration;
 use leptos::{logging, prelude::*};
 use uuid::Uuid;
 
@@ -76,7 +77,7 @@ pub fn ReminderDateTimeSection(
     reminder_list: RwSignal<Vec<Reminder>>,
 ) -> impl IntoView {
     view! {
-        <div>
+        <div class="w-full grow">
         {
             move || {
                 let due_date = get_reminder(reminder_list, reminder_id).map(|r| r.due_date);
@@ -87,7 +88,6 @@ pub fn ReminderDateTimeSection(
                             <></>
                         }.into_any(),
                         DueDate::Once { due } => view! {
-                                <>
                                 <input type="datetime-local" class="grow" prop:value=move || {
                                     let input_string = utc_to_input_string(due);
                                     logging::log!("{}", input_string);
@@ -96,10 +96,19 @@ pub fn ReminderDateTimeSection(
                                     let value = event_target_value(&ev);
                                     update_reminder(reminder_list, reminder_id, |r| r.due_date = DueDate::Once { due: datetime_local_to_utc(&value).unwrap_or_default() });
                                 } />
-                                </>
                             }.into_any(),
                         DueDate::Interval { orig_due, interval } => view! {
-                            <></>
+                            <div class="flex flex-col grow w-full space-y-2">
+                                <input type="datetime-local" class="grow w-full" prop:value=move || {
+                                    let input_string = utc_to_input_string(orig_due);
+                                    logging::log!("{}", input_string);
+                                    input_string
+                                } on:input=move |ev| {
+                                    let value = event_target_value(&ev);
+                                    update_reminder(reminder_list, reminder_id, |r| r.due_date = DueDate::Once { due: datetime_local_to_utc(&value).unwrap_or_default() });
+                                } />
+                                <ReminderDurationPicker duration=interval reminder_list />
+                            </div>
                         }.into_any(),
                         DueDate::RecurAfterCompletion { orig_due, last_completion, interval } => view! {
                             <></>
@@ -112,5 +121,21 @@ pub fn ReminderDateTimeSection(
             }
         }
         </div>
+    }
+}
+
+#[component]
+pub fn ReminderDurationPicker(
+    duration: Duration,
+    reminder_list: RwSignal<Vec<Reminder>>,
+) -> impl IntoView {
+    view! {
+        <select class="grow w-full">
+            <option value="daily">"Every x days"</option>
+            <option value="weekly">"Every x weeks"</option>
+            <option value="months">"Every x months"</option>
+            <option value="years">"Every x years"</option>
+        </select>
+        <input type="number" class="grow w-full" />
     }
 }
