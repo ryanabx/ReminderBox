@@ -76,7 +76,7 @@ body {
     flex flex-col
     w-full
     items-center
-    pb-18
+    pb-20
     pt-12
     bg-neutral-50
     dark:bg-black
@@ -86,7 +86,7 @@ body {
     @apply
     flex
     justify-center
-    absolute bottom-6 left-6 right-6
+    absolute bottom-8 left-8 right-8
     h-12;
 }
 
