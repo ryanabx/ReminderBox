@@ -4,8 +4,8 @@
 
 html {
     @apply
-    bg-neutral-100/20
-    dark:bg-neutral-800/20
+    bg-neutral-100
+    dark:bg-neutral-800
     text-black
     dark:text-white
     overscroll-none
