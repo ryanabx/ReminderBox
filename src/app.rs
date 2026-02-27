@@ -29,7 +29,7 @@ pub fn App() -> impl IntoView {
     view! {
         {
             move || match page.get() {
-                Page::Main => view! { <RemindersPage reminder_list=user_data.get().reminders/> }.into_any(),
+                Page::Main => view! { <RemindersPage reminder_list=user_data.get().reminders view_settings = user_data.get().view_settings/> }.into_any(),
                 Page::Settings(id) => view! { <ReminderSettings reminder_id=id reminder_list=user_data.get().reminders/> }.into_any(),
             }
         }

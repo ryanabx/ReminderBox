@@ -6,6 +6,12 @@ use uuid::Uuid;
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, Eq, Default)]
 pub struct UserData {
     pub reminders: RwSignal<Vec<Reminder>>,
+    pub view_settings: RwSignal<ViewSettings>,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, Eq, Default)]
+pub struct ViewSettings {
+    pub show_completed: bool,
 }
 
 #[derive(Clone, Debug, Deserialize, Serialize)]

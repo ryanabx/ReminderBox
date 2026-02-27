@@ -4,18 +4,23 @@ use web_sys::KeyboardEvent;
 
 use crate::{
     app::Page,
-    user_data::{Reminder, get_reminder, time_past_now, update_reminder, utc_to_local},
+    user_data::{
+        Reminder, ViewSettings, get_reminder, time_past_now, update_reminder, utc_to_local,
+    },
 };
 
 #[component]
-pub fn RemindersPage(reminder_list: RwSignal<Vec<Reminder>>) -> impl IntoView {
+pub fn RemindersPage(
+    reminder_list: RwSignal<Vec<Reminder>>,
+    view_settings: RwSignal<ViewSettings>,
+) -> impl IntoView {
     let focus = RwSignal::<Option<Uuid>>::new(None);
     let new_reminder = move |_| {
         new_blank_reminder(reminder_list, None, focus);
     };
     let reminder_to_widget = move |reminder: Reminder| {
         view! {
-            <ReminderContainer reminder_id=reminder.id reminder_list=reminder_list next_focus=focus/>
+            <ReminderContainer reminder_id=reminder.id reminder_list=reminder_list view_settings=view_settings next_focus=focus/>
         }
     };
     view! {
@@ -55,6 +60,7 @@ pub fn RemindersPage(reminder_list: RwSignal<Vec<Reminder>>) -> impl IntoView {
 pub fn ReminderContainer(
     reminder_id: Uuid,
     reminder_list: RwSignal<Vec<Reminder>>,
+    view_settings: RwSignal<ViewSettings>,
     next_focus: RwSignal<Option<Uuid>>,
 ) -> impl IntoView {
     // let id = reminder.id.clone();
@@ -94,79 +100,91 @@ pub fn ReminderContainer(
     });
 
     view! {
-        <div draggable=true class="flex flex-row space-x-2 constrain-x"
-            on:focusin=move |_| set_focused.set(true)
-            on:focusout=move |_| set_focused.set(false)>
-            <label class="flex items-center cursor-pointer space-x-3">
-                <input type="checkbox"
-                    class="hidden peer"
-                    prop:checked=move || {
-                        get_reminder(reminder_list, reminder_id).map(|r| r.completed).unwrap_or_default()
-                    }
-                    on:input=move |ev| {
-                        let checked = event_target_checked(&ev);
-                        update_reminder(reminder_list, reminder_id, |r| r.completed = checked);
-                    }
-                />
-                <div class="w-6 h-6 rounded-full border-2 border-neutral-400 peer-checked:bg-blue-500 peer-checked:border-blue-500 transition-colors duration-150 flex items-center justify-center">
-                    <svg class="w-3 h-3 {} text-white transition-opacity"
-                        class:opacity-0=move || {
-                            get_reminder(reminder_list, reminder_id).map(|r| !r.completed).unwrap_or_default()
-                        }
-                        fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
-                    </svg>
-                </div>
-            </label>
-            <div class="flex flex-col grow py-2 px-2">
-                <textarea node_ref=input_ref class="multiline-input reminder-input"
-                prop:value=move || {
-                    get_reminder(reminder_list, reminder_id).map(|r| r.title).unwrap_or_default()
-                }
-                on:input = move |ev| {
-                    let value = event_target_value(&ev);
-                    update_reminder(reminder_list, reminder_id, |r| r.title = value);
-                }
-                on:keydown=move |ev: KeyboardEvent| {
-                    if ev.key() == "Enter" && !ev.get_modifier_state("Shift") {
-                        ev.prevent_default();
-                        new_blank_reminder(reminder_list, Some(reminder_id), next_focus);
-                    }
-                    if ev.key() == "Backspace"
-                        && !ev.get_modifier_state("Shift")
-                        && !ev.get_modifier_state("Control")
-                    {
-                        if get_reminder(reminder_list, reminder_id).map(|r| r.is_empty()).unwrap_or_default()
-                        {
-                            ev.prevent_default();
-                            remove_reminder(reminder_list, reminder_id, next_focus);
-                        }
-                    }
-                }
-                />
-                {move || {
-                    let due_date = get_reminder(reminder_list, reminder_id).map(|r| r.due_date).unwrap_or_default();
-                    match due_date {
-                        crate::user_data::DueDate::None => None,
-                        crate::user_data::DueDate::Once { due } => {
-                            Some(
-                                view! {
-                                    <p class="grow wrap-anywhere text-neutral-500" class:text-red-500=move || {time_past_now(due)}>{utc_to_local(due)}</p>
+        {move || {
+            if !view_settings.with(|view_settings| view_settings.show_completed) && get_reminder(reminder_list, reminder_id).is_none_or(|r| r.completed) {
+                None
+            }
+            else {
+                Some(
+                    view! {
+                        <div draggable=true class="flex flex-row space-x-2 constrain-x"
+                            on:focusin=move |_| set_focused.set(true)
+                            on:focusout=move |_| set_focused.set(false)>
+                            <label class="flex items-center cursor-pointer space-x-3">
+                                <input type="checkbox"
+                                    class="hidden peer"
+                                    prop:checked=move || {
+                                        get_reminder(reminder_list, reminder_id).map(|r| r.completed).unwrap_or_default()
+                                    }
+                                    on:input=move |ev| {
+                                        let checked = event_target_checked(&ev);
+                                        update_reminder(reminder_list, reminder_id, |r| r.completed = checked);
+                                    }
+                                />
+                                <div class="w-6 h-6 rounded-full border-2 border-neutral-400 peer-checked:bg-blue-500 peer-checked:border-blue-500 transition-colors duration-150 flex items-center justify-center">
+                                    <svg class="w-3 h-3 {} text-white transition-opacity"
+                                        class:opacity-0=move || {
+                                            get_reminder(reminder_list, reminder_id).map(|r| !r.completed).unwrap_or_default()
+                                        }
+                                        fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                                    </svg>
+                                </div>
+                            </label>
+                            <div class="flex flex-col grow py-2 px-2">
+                                <textarea node_ref=input_ref class="multiline-input reminder-input"
+                                prop:value=move || {
+                                    get_reminder(reminder_list, reminder_id).map(|r| r.title).unwrap_or_default()
                                 }
-                            )
-                        },
-                        crate::user_data::DueDate::Interval { orig_due, interval } => None,
-                        crate::user_data::DueDate::RecurAfterCompletion { orig_due, last_completion, interval } => None,
+                                on:input = move |ev| {
+                                    let value = event_target_value(&ev);
+                                    update_reminder(reminder_list, reminder_id, |r| r.title = value);
+                                }
+                                on:keydown=move |ev: KeyboardEvent| {
+                                    if ev.key() == "Enter" && !ev.get_modifier_state("Shift") {
+                                        ev.prevent_default();
+                                        new_blank_reminder(reminder_list, Some(reminder_id), next_focus);
+                                    }
+                                    if ev.key() == "Backspace"
+                                        && !ev.get_modifier_state("Shift")
+                                        && !ev.get_modifier_state("Control")
+                                    {
+                                        if get_reminder(reminder_list, reminder_id).map(|r| r.is_empty()).unwrap_or_default()
+                                        {
+                                            ev.prevent_default();
+                                            remove_reminder(reminder_list, reminder_id, next_focus);
+                                        }
+                                    }
+                                }
+                                />
+                                {move || {
+                                    let due_date = get_reminder(reminder_list, reminder_id).map(|r| r.due_date).unwrap_or_default();
+                                    match due_date {
+                                        crate::user_data::DueDate::None => None,
+                                        crate::user_data::DueDate::Once { due } => {
+                                            Some(
+                                                view! {
+                                                    <p class="grow wrap-anywhere text-neutral-500" class:text-red-500=move || {time_past_now(due)}>{utc_to_local(due)}</p>
+                                                }
+                                            )
+                                        },
+                                        crate::user_data::DueDate::Interval { orig_due, interval } => None,
+                                        crate::user_data::DueDate::RecurAfterCompletion { orig_due, last_completion, interval } => None,
+                                    }
+                                }}
+                            </div>
+                            <button class="info-button"
+                            class:opacity-0=move || {!focused.get()}
+                            on:click=move |_| {set_page.set(Page::Settings(reminder_id))}
+                            >
+                                "i"
+                            </button>
+                        </div>
                     }
-                }}
-            </div>
-            <button class="info-button"
-            class:opacity-0=move || {!focused.get()}
-            on:click=move |_| {set_page.set(Page::Settings(reminder_id))}
-            >
-                "i"
-            </button>
-        </div>
+                )
+            }
+        }
+    }
     }
 }
 
