@@ -46,7 +46,6 @@ html, body {
     w-full
     justify-center
     items-center
-    max-w-xl
     bg-neutral-400/20
     dark:bg-neutral-800/20
     backdrop-blur-sm
