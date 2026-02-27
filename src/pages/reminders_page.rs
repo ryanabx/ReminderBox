@@ -21,7 +21,7 @@ pub fn RemindersPage(reminder_list: RwSignal<Vec<Reminder>>) -> impl IntoView {
     view! {
         <div class="container-reminder-list-header">
             <div class="container-reminder-list-header-inner">
-                <h1 class="font-bold text-2xl">"Reminders"</h1>
+                <h1 class="font-bold text-xl">"Reminders"</h1>
             </div>
         </div>
         <div class="toplevel-container scroll-container">
