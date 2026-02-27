@@ -3,17 +3,34 @@
 /* Toplevel Stuff */
 
 html {
-    @apply bg-neutral-50 dark:bg-black text-black dark:text-white overscroll-none select-none;
+    @apply
+    bg-neutral-100/20
+    dark:bg-neutral-800/20
+    text-black
+    dark:text-white
+    overscroll-none
+    select-none;
 }
 
 html, body {
     @apply w-dvw h-dvh overflow-hidden;
 }
 
+body {
+    @apply flex flex-col items-center;
+}
+
 /* Containers */
 
 .toplevel-container {
-    @apply flex flex-col w-full h-full px-4 items-center;
+    @apply
+    bg-neutral-50
+    dark:bg-black
+    flex
+    flex-col
+    w-full h-full
+    px-4
+    items-center;
 }
 
 .scroll-container {
@@ -46,7 +63,7 @@ html, body {
     w-full
     justify-center
     items-center
-    bg-neutral-400/20
+    bg-neutral-100/20
     dark:bg-neutral-800/20
     border-b-2
     border-neutral-950/20
@@ -61,6 +78,8 @@ html, body {
     items-center
     pb-18
     pt-14
+    bg-neutral-50
+    dark:bg-black
 }
 
 .container-reminder-input {
