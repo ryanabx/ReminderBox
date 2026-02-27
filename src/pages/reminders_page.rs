@@ -155,8 +155,8 @@ pub fn ReminderContainer(
                                 }
                             )
                         },
-                        crate::user_data::DueDate::Interval { orig_due, interval } => todo!(),
-                        crate::user_data::DueDate::RecurAfterCompletion { orig_due, last_completion, interval } => todo!(),
+                        crate::user_data::DueDate::Interval { orig_due, interval } => None,
+                        crate::user_data::DueDate::RecurAfterCompletion { orig_due, last_completion, interval } => None,
                     }
                 }}
             </div>
