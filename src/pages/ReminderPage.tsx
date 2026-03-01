@@ -74,7 +74,6 @@ export default function ReminderPage() {
                                     opacity: focusedId === r.id ? 1 : 0,
                                     position: focusedId === r.id ? "relative" : "absolute",
                                     right: focusedId === r.id ? null : 0,
-                                    transition: 'opacity 0.2s, transform 0.2s',
                                     pointerEvents: focusedId === r.id ? 'auto' : 'none',
                                 }}
                             >
