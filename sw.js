@@ -1,6 +1,6 @@
 const CACHE_NAME = 'spa-cache-v1';
 
-// Install: nothing special yet
+// Install
 self.addEventListener('install', event => {
   self.skipWaiting();
 });
@@ -20,18 +20,22 @@ self.addEventListener('activate', event => {
   self.clients.claim();
 });
 
-// Fetch: Network first, fallback to cache
+// Fetch: Cache first, fallback to network
 self.addEventListener('fetch', event => {
 
   // Only handle GET requests
   if (event.request.method !== 'GET') return;
 
   event.respondWith(
+    caches.match(event.request).then(cachedResponse => {
 
-    fetch(event.request)
+      // If found in cache -> return it immediately
+      if (cachedResponse) {
+        return cachedResponse;
+      }
 
-      // If network works -> cache + return
-      .then(networkResponse => {
+      // Otherwise fetch from network
+      return fetch(event.request).then(networkResponse => {
 
         // Only cache valid responses
         if (
@@ -39,20 +43,15 @@ self.addEventListener('fetch', event => {
           networkResponse.status === 200 &&
           networkResponse.type === 'basic'
         ) {
-
           const cloned = networkResponse.clone();
-
           caches.open(CACHE_NAME).then(cache => {
             cache.put(event.request, cloned);
           });
         }
 
         return networkResponse;
-      })
+      });
 
-      // If network fails -> cache
-      .catch(() => {
-        return caches.match(event.request);
-      })
+    })
   );
 });
