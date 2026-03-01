@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import { VitePWA } from 'vite-plugin-pwa';
 
 import { execSync } from "child_process"
 
@@ -13,7 +14,36 @@ function getGitCommit() {
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react()],
+  plugins: [
+    react(),
+    VitePWA({
+      registerType: 'autoUpdate', // automatically update the service worker
+      manifest: {
+        "name": "ReminderBox",
+        "short_name": "ReminderBox",
+        "description": "A reminders app for your browser",
+        "start_url": "/ReminderBox/",
+        "id": "/ReminderBox/",
+        "scope": "/ReminderBox/",
+        "display": "standalone",
+        "background_color": "#ffffff",
+        "theme_color": "#1e88e5",
+        "orientation": "portrait",
+        "icons": [
+          {
+            "src": "android-chrome-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+          },
+          {
+            "src": "android-chrome-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+          }
+        ]
+      }
+    }),
+  ],
   base: "/ReminderBox",
   define: {
     __APP_COMMIT__: JSON.stringify(getGitCommit()),
