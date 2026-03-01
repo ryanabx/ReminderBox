@@ -40,6 +40,22 @@ export default defineConfig({
             "sizes": "512x512",
             "type": "image/png"
           }
+        ],
+        screenshots: [
+          {
+            src: "screenshots/screenshot-wide.png",
+            sizes: "1280x720",
+            type: "image/png",
+            label: "Main Reminder Screen",
+            form_factor: "wide"  // required for desktop "richer install"
+          },
+          {
+            src: "screenshots/screenshot-mobile.png",
+            sizes: "752x1136",
+            type: "image/png",
+            label: "Mobile Reminder Screen"
+            // form_factor omitted, default for mobile
+          }
         ]
       }
     }),
