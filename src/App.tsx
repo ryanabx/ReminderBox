@@ -11,11 +11,11 @@ function App() {
     <React.Fragment>
       <CssBaseline />
       <>
-        <BrowserRouter>
+        <BrowserRouter basename="/ReminderBox">
           <Header />
           <Routes>
-            <Route path="/ReminderBox/" element={<ReminderPage />} />
-            <Route path="/ReminderBox/about/" element={<AboutPage />} />
+            <Route path="/" element={<ReminderPage />} />
+            <Route path="/about" element={<AboutPage />} />
           </Routes>
         </BrowserRouter>
       </>

@@ -65,8 +65,8 @@ export default function Header() {
               open={Boolean(anchorEl)}
               onClose={handleClose}
             >
-              <MenuItem onClick={() => { changePage("/ReminderBox/") }}>Reminders</MenuItem>
-              <MenuItem onClick={() => changePage("/ReminderBox/about/")}>About</MenuItem>
+              <MenuItem onClick={() => { changePage("") }}>Reminders</MenuItem>
+              <MenuItem onClick={() => changePage("about")}>About</MenuItem>
             </Menu>
           </div>
         </Toolbar>
