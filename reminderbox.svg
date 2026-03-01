@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="1600"
+   height="600"
+   viewBox="0 0 423.33331 158.75"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.4.3 (0d15f75042, 2025-12-25)"
+   sodipodi:docname="reminderbox.svg"
+   inkscape:export-filename="reminderbox.png"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="true"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="px"
+     inkscape:zoom="0.89093884"
+     inkscape:cx="397.89488"
+     inkscape:cy="310.34678"
+     inkscape:window-width="1536"
+     inkscape:window-height="888"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="g1"
+     inkscape:export-bgcolor="#ffffffff">
+    <inkscape:page
+       x="0"
+       y="0"
+       width="423.33331"
+       height="158.75"
+       id="page2"
+       margin="0"
+       bleed="0" />
+  </sodipodi:namedview>
+  <defs
+     id="defs1">
+    <rect
+       x="530.7395"
+       y="163.7829"
+       width="677.93683"
+       height="261.22336"
+       id="rect2" />
+    <filter
+       style="color-interpolation-filters:sRGB"
+       inkscape:label="Drop Shadow"
+       id="filter42"
+       x="-0.28388458"
+       y="-0.28388458"
+       width="1.5677692"
+       height="1.5677692">
+      <feFlood
+         result="flood"
+         in="SourceGraphic"
+         flood-opacity="0.623529"
+         flood-color="rgb(0,0,0)"
+         id="feFlood41" />
+      <feGaussianBlur
+         result="blur"
+         in="SourceGraphic"
+         stdDeviation="11.010062"
+         id="feGaussianBlur41" />
+      <feOffset
+         result="offset"
+         in="blur"
+         dx="0.000000"
+         dy="0.000000"
+         id="feOffset41" />
+      <feComposite
+         result="comp1"
+         operator="in"
+         in="flood"
+         in2="offset"
+         id="feComposite41" />
+      <feComposite
+         result="comp2"
+         operator="over"
+         in="SourceGraphic"
+         in2="comp1"
+         id="feComposite42" />
+    </filter>
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <g
+       id="g4"
+       inkscape:label="ReminderBoxBanner"
+       transform="translate(-5.0512074,-21.281253)">
+      <g
+         id="g1"
+         inkscape:label="ReminderBoxLogoWithBackground"
+         transform="matrix(0.67271157,0,0,0.67271157,22.456016,55.091087)">
+        <rect
+           style="fill:#ffffff;stroke-width:3.70417;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4.6;stroke-dasharray:none"
+           id="rect1"
+           width="135.46666"
+           height="135.46666"
+           x="0"
+           y="0"
+           inkscape:label="Background Rect" />
+        <g
+           id="g2"
+           transform="matrix(1.0226076,0,0,1.0226076,12.528531,-1.5312939)"
+           style="stroke-width:6.26343134;stroke-dasharray:none;stroke:#000000;stroke-opacity:1"
+           inkscape:label="Logo">
+          <path
+             style="fill:none;stroke:#595959;stroke-width:4.61536237;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4.6;stroke-dasharray:none;stroke-opacity:1"
+             d="M 43.065769,37.388049 H 96.362368"
+             id="path1" />
+          <circle
+             style="fill:#ffffff;stroke:#595959;stroke-width:4.61536237;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4.6;stroke-dasharray:none;stroke-opacity:1;fill-opacity:0"
+             id="path2"
+             cx="22.443008"
+             cy="37.727207"
+             r="10.497538" />
+          <path
+             style="fill:none;stroke:#595959;stroke-width:4.61536237;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4.6;stroke-dasharray:none;stroke-opacity:1"
+             d="M 43.065771,67.733332 H 96.362368"
+             id="path1-2" />
+          <circle
+             style="fill:#c3ffff;stroke:#595959;stroke-width:4.61536237;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4.6;stroke-dasharray:none;stroke-opacity:1;fill-opacity:1"
+             id="path2-2"
+             cx="22.443008"
+             cy="67.733337"
+             r="10.497538" />
+          <path
+             style="fill:none;stroke:#595959;stroke-width:4.61536237;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4.6;stroke-dasharray:none;stroke-opacity:1"
+             d="M 43.065776,98.078617 H 96.362368"
+             id="path1-2-7" />
+          <circle
+             style="fill:#00ffff;stroke:#595959;stroke-width:4.61536237;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4.6;stroke-dasharray:none;stroke-opacity:1"
+             id="path2-2-8"
+             cx="22.443008"
+             cy="97.739464"
+             r="10.497538" />
+        </g>
+      </g>
+      <g
+         id="path3"
+         inkscape:label="Separator"
+         style="opacity:1;stroke:#ffffff;stroke-width:3.175;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill">
+        <path
+           style="baseline-shift:baseline;display:inline;overflow:visible;fill:#333333;stroke:#ffffff;stroke-width:3.175;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4.6;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill;enable-background:accumulate;stop-color:#000000;stop-opacity:1"
+           d="M 132.19681,41.688623 V 159.62354"
+           id="path5" />
+        <path
+           style="baseline-shift:baseline;display:inline;overflow:visible;stroke:#ffffff;stroke-width:3.175;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4.6;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill;enable-background:accumulate;stop-color:#000000;stop-opacity:1"
+           d="m 132.19727,40.101562 a 1.5875,1.5875 0 0 0 -1.5879,1.587891 V 159.62305 a 1.5875,1.5875 0 0 0 1.5879,1.58789 1.5875,1.5875 0 0 0 1.58789,-1.58789 V 41.689453 a 1.5875,1.5875 0 0 0 -1.58789,-1.587891 z"
+           id="path6" />
+      </g>
+      <g
+         id="g3"
+         inkscape:label="TitleAndSubtitle"
+         transform="translate(0.7278219,4.5745022)">
+        <text
+           xml:space="preserve"
+           style="font-size:42.3333px;writing-mode:lr-tb;direction:ltr;fill:#333333;fill-opacity:1;stroke:#ffffff;stroke-width:3.175;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4.6;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill"
+           x="147.69441"
+           y="97.719009"
+           id="text2"><tspan
+             sodipodi:role="line"
+             id="tspan2"
+             style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:42.3333px;font-family:'Adwaita Sans';-inkscape-font-specification:'Adwaita Sans Bold';fill:#333333;fill-opacity:1;stroke:#ffffff;stroke-width:3.175;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill"
+             x="147.69441"
+             y="97.719009">ReminderBox</tspan></text>
+        <text
+           xml:space="preserve"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:16.9333px;font-family:'Adwaita Sans';-inkscape-font-specification:'Adwaita Sans Bold';writing-mode:lr-tb;direction:ltr;fill:#333333;fill-opacity:1;stroke:#ffffff;stroke-width:3.175;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4.6;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill"
+           x="149.91443"
+           y="123.18863"
+           id="text3"><tspan
+             sodipodi:role="line"
+             id="tspan3"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16.9333px;font-family:'Adwaita Sans';-inkscape-font-specification:'Adwaita Sans';fill:#333333;fill-opacity:1;stroke:#ffffff;stroke-width:3.175;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill"
+             x="149.91443"
+             y="123.18863">Your reminders, in a box</tspan></text>
+      </g>
+    </g>
+  </g>
+</svg>
