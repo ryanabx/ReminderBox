@@ -14,6 +14,7 @@ function getGitCommit() {
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
+  base: "/ReminderBox/",
   define: {
     __APP_COMMIT__: JSON.stringify(getGitCommit()),
   },

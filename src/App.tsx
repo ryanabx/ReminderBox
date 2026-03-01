@@ -14,8 +14,8 @@ function App() {
         <BrowserRouter>
           <Header />
           <Routes>
-            <Route path="/" element={<ReminderPage />} />
-            <Route path="/about" element={<AboutPage />} />
+            <Route path="/ReminderBox/" element={<ReminderPage />} />
+            <Route path="/ReminderBox/about/" element={<AboutPage />} />
           </Routes>
         </BrowserRouter>
       </>
