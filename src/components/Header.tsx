@@ -17,7 +17,7 @@ import { FormControlLabel, FormGroup, Switch } from '@mui/material';
 
 type HeaderProps = {
   showCompleted: boolean;
-  setShowCompleted: (val: boolean) => void;
+  setShowCompleted: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export default function Header({ showCompleted, setShowCompleted }: HeaderProps) {
