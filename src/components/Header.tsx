@@ -68,7 +68,10 @@ export default function Header({ showCompleted, setShowCompleted }: HeaderProps)
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          <Typography variant="h6" onClick={() => { changePage("/") }}
+            component="div"
+            sx={{ flexGrow: 1, cursor: "pointer" }}
+          >
             ReminderBox
           </Typography>
           <div>
