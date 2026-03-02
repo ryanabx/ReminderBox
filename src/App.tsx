@@ -6,6 +6,9 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import ReminderPage from './pages/ReminderPage';
 import AboutPage from './pages/AboutPage';
 import { createTheme, ThemeProvider } from '@mui/material';
+import { enUS } from '@mui/x-date-pickers/locales';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
 const theme = createTheme({
   colorSchemes: {
@@ -29,16 +32,21 @@ function App() {
   return (
     <React.Fragment>
       <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <>
-          <BrowserRouter basename="/ReminderBox/">
-            <Header showCompleted={showCompleted} setShowCompleted={setShowCompleted} />
-            <Routes>
-              <Route path="/" element={<ReminderPage showCompleted={showCompleted} />} />
-              <Route path="/about" element={<AboutPage />} />
-            </Routes>
-          </BrowserRouter>
-        </>
+        <LocalizationProvider
+          localeText={enUS.components.MuiLocalizationProvider.defaultProps.localeText}
+          dateAdapter={AdapterDayjs}
+        >
+          <CssBaseline />
+          <>
+            <BrowserRouter basename="/ReminderBox/">
+              <Header showCompleted={showCompleted} setShowCompleted={setShowCompleted} />
+              <Routes>
+                <Route path="/" element={<ReminderPage showCompleted={showCompleted} />} />
+                <Route path="/about" element={<AboutPage />} />
+              </Routes>
+            </BrowserRouter>
+          </>
+        </LocalizationProvider>
       </ThemeProvider>
     </React.Fragment>
   )
