@@ -60,7 +60,7 @@ export default defineConfig({
       }
     }),
   ],
-  base: "/ReminderBox",
+  base: "/ReminderBox/",
   define: {
     __APP_COMMIT__: JSON.stringify(getGitCommit()),
   },
