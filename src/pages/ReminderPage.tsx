@@ -9,7 +9,11 @@ type ReminderType = {
     completed: boolean;
 };
 
-export default function ReminderPage() {
+type ReminderProps = {
+    showCompleted: boolean;
+};
+
+export default function ReminderPage({ showCompleted }: ReminderProps) {
     const [reminders, setReminders] = React.useState<ReminderType[]>(() => {
         // Load from localStorage on first render
         const saved = localStorage.getItem('reminders');
@@ -71,6 +75,13 @@ export default function ReminderPage() {
         return reminder.text.length === 0;
     }
 
+    const sortedReminders = [...reminders].sort((a, b) => {
+        // false (incomplete) comes before true (complete)
+        return (a.completed === b.completed) ? 0 : a.completed ? 1 : -1;
+    });
+
+    const filteredReminders = sortedReminders.filter(r => showCompleted || !r.completed);
+
     return (
         <React.Fragment>
             <Container maxWidth="sm">
@@ -78,7 +89,7 @@ export default function ReminderPage() {
                     pb: 12,
                     pt: 2
                 }}>
-                    {reminders.map((r) => (
+                    {filteredReminders.map((r) => (
                         <Stack key={r.id} direction="row" spacing={1} alignItems="center">
                             <Checkbox
                                 checked={r.completed}

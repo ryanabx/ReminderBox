@@ -11,12 +11,26 @@ import MenuIcon from '@mui/icons-material/Menu';
 // import FormGroup from '@mui/material/FormGroup';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { MoreHoriz } from '@mui/icons-material';
+import { FormControlLabel, FormGroup, Switch } from '@mui/material';
 
-export default function Header() {
+type HeaderProps = {
+  showCompleted: boolean;
+  setShowCompleted: (val: boolean) => void;
+};
+
+export default function Header({ showCompleted, setShowCompleted }: HeaderProps) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [anchorElRight, setAnchorElRight] = React.useState<null | HTMLElement>(null);
+
+  const handleToggle = (event: React.ChangeEvent<HTMLInputElement, Element>) => {
+    setShowCompleted(event.target.checked);
+  };
 
   const navigate = useNavigate();
+
+  const location = useLocation();
 
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -24,6 +38,14 @@ export default function Header() {
 
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleMenuRight = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorElRight(event.currentTarget);
+  };
+
+  const handleCloseRight = () => {
+    setAnchorElRight(null);
   };
 
   const changePage = (page: string) => {
@@ -69,6 +91,48 @@ export default function Header() {
               <MenuItem onClick={() => changePage("/about/")}>About</MenuItem>
             </Menu>
           </div>
+          {location.pathname === "/" && (
+            <div>
+              <IconButton
+                size="large"
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={handleMenuRight}
+                color="inherit"
+              >
+                <MoreHoriz />
+              </IconButton>
+              <Menu
+                id="menu-appbar"
+                anchorEl={anchorElRight}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={Boolean(anchorElRight)}
+                onClose={handleCloseRight}
+              >
+                <MenuItem onClick={handleCloseRight}>
+                  <FormGroup>
+                    <FormControlLabel control={
+                      <Switch
+                        checked={showCompleted}
+                        onChange={handleToggle}
+                        edge="end"
+                      />
+                    } label="Show Completed" />
+                  </FormGroup>
+                </MenuItem>
+              </Menu>
+            </div>
+          )
+          }
         </Toolbar>
       </AppBar>
       <Toolbar />

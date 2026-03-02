@@ -14,15 +14,27 @@ const theme = createTheme({
 });
 
 function App() {
+
+  const [showCompleted, setShowCompleted] = React.useState<boolean>(() => {
+    // Load from localStorage on first render
+    const saved = localStorage.getItem('showCompleted');
+    return saved ? JSON.parse(saved) : true; // default: show completed
+  });
+
+  // Save whenever it changes
+  React.useEffect(() => {
+    localStorage.setItem('showCompleted', JSON.stringify(showCompleted));
+  }, [showCompleted]);
+
   return (
     <React.Fragment>
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <>
           <BrowserRouter basename="/ReminderBox/">
-            <Header />
+            <Header showCompleted={showCompleted} setShowCompleted={setShowCompleted} />
             <Routes>
-              <Route path="/" element={<ReminderPage />} />
+              <Route path="/" element={<ReminderPage showCompleted={showCompleted} />} />
               <Route path="/about" element={<AboutPage />} />
             </Routes>
           </BrowserRouter>
