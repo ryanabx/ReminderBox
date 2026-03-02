@@ -15,31 +15,58 @@ export default function ReminderPage() {
         const saved = localStorage.getItem('reminders');
         return saved ? JSON.parse(saved) : [];
     });
-
+    // Which reminder is focused
     const [focusedId, setFocusedId] = React.useState<string | null>(null);
-
+    // Input refs, for forcing focus
+    const inputRefs = React.useRef<Record<string, HTMLInputElement | null>>({});
     // Save to localStorage whenever reminders change
     React.useEffect(() => {
         localStorage.setItem('reminders', JSON.stringify(reminders));
     }, [reminders]);
-
+    // Update a reminder
     const updateReminder = (id: string, fields: Partial<ReminderType>) => {
         setReminders((prev) =>
             prev.map((r) => (r.id === id ? { ...r, ...fields } : r))
         );
     };
-
+    // Add a reminder
     const addReminder = () => {
+        const id = uuidv4();
         setReminders((prev) => [
             ...prev,
-            { id: uuidv4(), text: '', completed: false },
+            { id, text: '', completed: false },
         ]);
-    };
 
+        // Focus after next render
+        setTimeout(() => {
+            inputRefs.current[id]?.focus();
+        }, 0);
+    };
+    // Add a reminder after a specific reminder
+    const addReminderAfter = (afterId: string) => {
+        const id = uuidv4();
+        setReminders(prev => {
+            const index = prev.findIndex(r => r.id === afterId);
+            const newReminder: ReminderType = { id, text: '', completed: false };
+            const updated = [
+                ...prev.slice(0, index + 1),
+                newReminder,
+                ...prev.slice(index + 1)
+            ];
+            return updated;
+        });
+        setFocusedId(id);
+
+        // Focus after next render
+        setTimeout(() => {
+            inputRefs.current[id]?.focus();
+        }, 0);
+    };
+    // Delete a reminder
     const deleteReminder = (id: string) => {
         setReminders((prev) => prev.filter((r) => r.id !== id));
     };
-
+    // Checks whether a reminder is empty
     const reminderIsEmpty = (reminder: ReminderType) => {
         return reminder.text.length === 0;
     }
@@ -64,6 +91,7 @@ export default function ReminderPage() {
                                 variant="outlined"
                                 size="small"
                                 value={r.text}
+                                inputRef={el => (inputRefs.current[r.id] = el)}
                                 onFocus={() => setFocusedId(r.id)}
                                 onBlur={() => {
                                     setFocusedId(null);
@@ -72,6 +100,18 @@ export default function ReminderPage() {
                                     }
                                 }}
                                 onChange={(e) => updateReminder(r.id, { text: e.target.value })}
+                                onKeyDown={(e) => {
+                                    if (e.key === 'Enter') {
+                                        e.preventDefault(); // prevent newline
+                                        if (reminderIsEmpty(r)) {
+                                            setFocusedId(null);
+                                            deleteReminder(r.id);
+                                        }
+                                        else {
+                                            addReminderAfter(r.id);
+                                        }
+                                    }
+                                }}
                                 sx={{ textDecoration: r.completed ? 'line-through' : 'none', transition: 'transform 0.2s' }}
                             />
                             <Stack
