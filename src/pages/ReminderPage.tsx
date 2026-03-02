@@ -9,8 +9,10 @@ export type ReminderType = {
     text: string;
     notes: string;
     completed: boolean;
-    repeat_type: string;
     due_date: Date | null;
+    repeat_type: string;
+    repeat_frequency_type: string;
+    repeat_frequency_amount: number;
 };
 
 function defaultReminder() {
@@ -20,8 +22,10 @@ function defaultReminder() {
         text: "",
         notes: "",
         completed: false,
+        due_date: null,
         repeat_type: "none",
-        due_date: null
+        repeat_frequency_type: "weeks",
+        repeat_frequency_amount: 1,
     };
 }
 

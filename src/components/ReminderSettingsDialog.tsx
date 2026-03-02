@@ -71,6 +71,7 @@ export default function ReminderSettingsDialog({ open, setOpen, reminders, setRe
                         </React.Fragment>
                     )
                 case "repeat":
+                case "repeat_after_completion":
                     return (
                         <React.Fragment>
                             <DateTimePicker
@@ -78,13 +79,13 @@ export default function ReminderSettingsDialog({ open, setOpen, reminders, setRe
                                 onChange={(newValue) => updateDraft({ due_date: newValue?.utc().toDate() })}
                             />
                             <Stack direction="row" spacing={1}>
-                                <Typography variant='body1' component="div" justifySelf="center" justifyContent="center" align="center" alignContent="center">Every:</Typography>
+                                <Typography variant='body1' component="div" justifySelf="center" justifyContent="center" align="center" alignContent="center">Repeat Every:</Typography>
                                 <Select
                                     fullWidth
                                     id="repeat-short"
-                                    // value={draft.repeat_type}
+                                    value={draft.repeat_frequency_amount}
                                     label="Due Date"
-                                // onChange={(e) => updateDraft({ repeat_type: String(e.target.value) })}
+                                    onChange={(e) => updateDraft({ repeat_frequency_amount: Number(e.target.value) })}
                                 >
                                     <MenuItem value={1}>1</MenuItem>
                                     <MenuItem value={2}>2</MenuItem>
@@ -102,8 +103,8 @@ export default function ReminderSettingsDialog({ open, setOpen, reminders, setRe
                                 <Select
                                     id="repeat-long"
                                     fullWidth
-                                // value={draft.repeat_type}
-                                // onChange={(e) => updateDraft({ repeat_type: String(e.target.value) })}
+                                    value={draft.repeat_frequency_type}
+                                    onChange={(e) => updateDraft({ repeat_frequency_type: String(e.target.value) })}
                                 >
                                     <MenuItem value="days">Days</MenuItem>
                                     <MenuItem value="weeks">Weeks</MenuItem>
