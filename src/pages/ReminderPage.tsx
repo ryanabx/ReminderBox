@@ -9,7 +9,21 @@ export type ReminderType = {
     text: string;
     notes: string;
     completed: boolean;
+    repeat_type: string;
+    due_date: Date | null;
 };
+
+function defaultReminder() {
+    const id = uuidv4();
+    return {
+        id,
+        text: "",
+        notes: "",
+        completed: false,
+        repeat_type: "none",
+        due_date: null
+    };
+}
 
 type ReminderProps = {
     showCompleted: boolean;
@@ -39,35 +53,37 @@ export default function ReminderPage({ showCompleted }: ReminderProps) {
     };
     // Add a reminder
     const addReminder = () => {
-        const id = uuidv4();
+
+        const reminder = defaultReminder();
+
         setReminders((prev) => [
             ...prev,
-            { id, text: "", notes: "", completed: false },
+            reminder
         ]);
+        setFocusedId(reminder.id);
 
         // Focus after next render
         setTimeout(() => {
-            inputRefs.current[id]?.focus();
+            inputRefs.current[reminder.id]?.focus();
         }, 0);
     };
     // Add a reminder after a specific reminder
     const addReminderAfter = (afterId: string) => {
-        const id = uuidv4();
+        const reminder = defaultReminder();
         setReminders(prev => {
             const index = prev.findIndex(r => r.id === afterId);
-            const newReminder: ReminderType = { id, text: "", notes: "", completed: false };
             const updated = [
                 ...prev.slice(0, index + 1),
-                newReminder,
+                reminder,
                 ...prev.slice(index + 1)
             ];
             return updated;
         });
-        setFocusedId(id);
+        setFocusedId(reminder.id);
 
         // Focus after next render
         setTimeout(() => {
-            inputRefs.current[id]?.focus();
+            inputRefs.current[reminder.id]?.focus();
         }, 0);
     };
     // Delete a reminder
@@ -122,7 +138,7 @@ export default function ReminderPage({ showCompleted }: ReminderProps) {
                                     value={r.text}
                                     onChange={(e) => updateReminder(r.id, { text: e.target.value })}
                                     onKeyDown={(e) => {
-                                        if (e.key === 'Enter') {
+                                        if (e.key === 'Enter' && !e.shiftKey) {
                                             e.preventDefault(); // prevent newline
                                             if (reminderIsEmpty(r)) {
                                                 setFocusedId(null);
