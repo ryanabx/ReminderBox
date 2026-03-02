@@ -88,6 +88,7 @@ export default function ReminderPage() {
                             />
                             <TextField
                                 fullWidth
+                                multiline
                                 variant="outlined"
                                 size="small"
                                 value={r.text}
