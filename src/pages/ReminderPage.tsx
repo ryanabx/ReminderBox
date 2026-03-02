@@ -40,6 +40,10 @@ export default function ReminderPage() {
         setReminders((prev) => prev.filter((r) => r.id !== id));
     };
 
+    const reminderIsEmpty = (reminder: ReminderType) => {
+        return reminder.text.length === 0;
+    }
+
     return (
         <React.Fragment>
             <Container maxWidth="sm">
@@ -63,6 +67,9 @@ export default function ReminderPage() {
                                 onFocus={() => setFocusedId(r.id)}
                                 onBlur={() => {
                                     setFocusedId(null);
+                                    if (reminderIsEmpty(r)) {
+                                        deleteReminder(r.id);
+                                    }
                                 }}
                                 onChange={(e) => updateReminder(r.id, { text: e.target.value })}
                                 sx={{ textDecoration: r.completed ? 'line-through' : 'none', transition: 'transform 0.2s' }}
