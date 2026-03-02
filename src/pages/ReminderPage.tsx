@@ -152,7 +152,7 @@ export default function ReminderPage({ showCompleted }: ReminderProps) {
                                     sx={{ textDecoration: r.completed ? 'line-through' : 'none', transition: 'transform 0.2s' }}
                                 />
                                 {
-                                    r.notes.length > 0 && (
+                                    r.notes && r.notes.length > 0 && (
                                         <Typography variant="body2">{r.notes}</Typography>
                                     )
                                 }
