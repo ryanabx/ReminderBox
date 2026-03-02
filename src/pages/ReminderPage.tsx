@@ -37,7 +37,12 @@ export default function ReminderPage({ showCompleted }: ReminderProps) {
     const [reminders, setReminders] = React.useState<ReminderType[]>(() => {
         // Load from localStorage on first render
         const saved = localStorage.getItem('reminders');
-        return saved ? JSON.parse(saved) : [];
+        return saved ? JSON.parse(saved).map((r: any) => {
+            if (r.due_date) {
+                r.due_date = new Date(r.due_date)
+            }
+            return r;
+        }) : [];
     });
     // Which reminder is focused
     const [focusedId, setFocusedId] = React.useState<string | null>(null);
@@ -94,6 +99,17 @@ export default function ReminderPage({ showCompleted }: ReminderProps) {
     const deleteReminder = (id: string) => {
         setReminders((prev) => prev.filter((r) => r.id !== id));
     };
+    // Mark a reminder complete, with recurring reminder handling
+    const markReminderComplete = (r: ReminderType, complete: boolean) => {
+        switch (r.repeat_type) {
+            case "none":
+            case "one_time":
+                updateReminder(r.id, { completed: complete });
+                break;
+            default:
+                break;
+        }
+    }
     // Checks whether a reminder is empty
     const reminderIsEmpty = (reminder: ReminderType) => {
         return reminder.text.length === 0;
@@ -122,7 +138,7 @@ export default function ReminderPage({ showCompleted }: ReminderProps) {
                             <Checkbox
                                 checked={r.completed}
                                 onChange={(e) =>
-                                    updateReminder(r.id, { completed: e.target.checked })
+                                    markReminderComplete(r, e.target.checked)
                                 }
                             />
                             <Stack sx={{ width: "100%" }}>
@@ -157,7 +173,12 @@ export default function ReminderPage({ showCompleted }: ReminderProps) {
                                 />
                                 {
                                     r.notes && r.notes.length > 0 && (
-                                        <Typography variant="body2">{r.notes}</Typography>
+                                        <Typography variant="body2" color="textSecondary">{r.notes}</Typography>
+                                    )
+                                }
+                                {
+                                    r.repeat_type != "none" && r.due_date && (
+                                        <Typography variant="body2" color={r.due_date < new Date() ? "error" : "textSecondary"}>{formatDate(r.due_date)}</Typography>
                                     )
                                 }
                             </Stack>
@@ -198,4 +219,17 @@ export default function ReminderPage({ showCompleted }: ReminderProps) {
             </Fab>
         </React.Fragment>
     )
+}
+
+function formatDate(date: Date): string {
+    const formatted = new Intl.DateTimeFormat("en-US", {
+        day: "numeric",
+        month: "numeric",
+        year: "numeric",
+        hour: "numeric",
+        minute: "2-digit",
+        hour12: true
+    }).format(date);
+
+    return formatted;
 }
