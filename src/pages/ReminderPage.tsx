@@ -3,6 +3,7 @@ import { Checkbox, Container, Fab, IconButton, Stack, TextField, Typography } fr
 import { v4 as uuidv4 } from 'uuid';
 import * as React from "react";
 import ReminderSettingsDialog from "../components/ReminderSettingsDialog";
+import { useFiveMinuteClock } from "../effects/timer";
 
 export type ReminderType = {
     id: string;
@@ -50,6 +51,8 @@ export default function ReminderPage({ showCompleted }: ReminderProps) {
     const inputRefs = React.useRef<Record<string, HTMLInputElement | null>>({});
     // Whether the reminder settings is open
     const [settingsOpen, setSettingsOpen] = React.useState<string | null>(null);
+    // 5 Minute timer on the minute
+    const fiveMinuteClock = useFiveMinuteClock();
     // Save to localStorage whenever reminders change
     React.useEffect(() => {
         localStorage.setItem('reminders', JSON.stringify(reminders));
@@ -178,7 +181,7 @@ export default function ReminderPage({ showCompleted }: ReminderProps) {
                                 }
                                 {
                                     r.repeat_type != "none" && r.due_date && (
-                                        <Typography variant="body2" color={r.due_date < new Date() ? "error" : "textSecondary"}>{formatDate(r.due_date)}</Typography>
+                                        <Typography variant="body2" color={r.due_date <= fiveMinuteClock ? "error" : "textSecondary"}>{formatDate(r.due_date)}</Typography>
                                     )
                                 }
                             </Stack>
