@@ -9,6 +9,8 @@ import { createTheme, ThemeProvider } from '@mui/material';
 import { enUS } from '@mui/x-date-pickers/locales';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { useFiveMinuteClock } from './effects/timer';
+import { useReminders, useShowCompleted } from './effects/storage';
 
 const theme = createTheme({
   colorSchemes: {
@@ -17,17 +19,12 @@ const theme = createTheme({
 });
 
 function App() {
-
-  const [showCompleted, setShowCompleted] = React.useState<boolean>(() => {
-    // Load from localStorage on first render
-    const saved = localStorage.getItem('showCompleted');
-    return saved ? JSON.parse(saved) : true; // default: show completed
-  });
-
-  // Save whenever it changes
-  React.useEffect(() => {
-    localStorage.setItem('showCompleted', JSON.stringify(showCompleted));
-  }, [showCompleted]);
+  // 5 Minute timer on the minute
+  // Used for updating due dates and notifications
+  const fiveMinuteClock = useFiveMinuteClock();
+  // Configurations
+  const [reminders, setReminders] = useReminders();
+  const [showCompleted, setShowCompleted] = useShowCompleted();
 
   return (
     <React.Fragment>
@@ -41,7 +38,7 @@ function App() {
             <BrowserRouter basename="/ReminderBox/">
               <Header showCompleted={showCompleted} setShowCompleted={setShowCompleted} />
               <Routes>
-                <Route path="/" element={<ReminderPage showCompleted={showCompleted} />} />
+                <Route path="/" element={<ReminderPage reminders={reminders} setReminders={setReminders} showCompleted={showCompleted} fiveMinuteClock={fiveMinuteClock} />} />
                 <Route path="/about" element={<AboutPage />} />
               </Routes>
             </BrowserRouter>

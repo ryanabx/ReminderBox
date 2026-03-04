@@ -1,62 +1,23 @@
 import { Add, Delete, InfoOutline } from "@mui/icons-material";
 import { Checkbox, Container, Fab, IconButton, Stack, TextField, Typography } from "@mui/material";
-import { v4 as uuidv4 } from 'uuid';
 import * as React from "react";
 import ReminderSettingsDialog from "../components/ReminderSettingsDialog";
-import { useFiveMinuteClock } from "../effects/timer";
-
-export type ReminderType = {
-    id: string;
-    text: string;
-    notes: string;
-    completed: boolean;
-    due_date: Date | null;
-    repeat_type: string;
-    repeat_frequency_type: string;
-    repeat_frequency_amount: number;
-};
-
-function defaultReminder() {
-    const id = uuidv4();
-    return {
-        id,
-        text: "",
-        notes: "",
-        completed: false,
-        due_date: null,
-        repeat_type: "none",
-        repeat_frequency_type: "weeks",
-        repeat_frequency_amount: 1,
-    };
-}
+import { defaultReminder, type ReminderType } from "../effects/storage";
 
 type ReminderProps = {
+    reminders: ReminderType[];
+    setReminders: React.Dispatch<React.SetStateAction<ReminderType[]>>;
     showCompleted: boolean;
+    fiveMinuteClock: Date;
 };
 
-export default function ReminderPage({ showCompleted }: ReminderProps) {
-    const [reminders, setReminders] = React.useState<ReminderType[]>(() => {
-        // Load from localStorage on first render
-        const saved = localStorage.getItem('reminders');
-        return saved ? JSON.parse(saved).map((r: any) => {
-            if (r.due_date) {
-                r.due_date = new Date(r.due_date)
-            }
-            return r;
-        }) : [];
-    });
+export default function ReminderPage({ reminders, setReminders, showCompleted, fiveMinuteClock }: ReminderProps) {
     // Which reminder is focused
     const [focusedId, setFocusedId] = React.useState<string | null>(null);
     // Input refs, for forcing focus
     const inputRefs = React.useRef<Record<string, HTMLInputElement | null>>({});
     // Whether the reminder settings is open
     const [settingsOpen, setSettingsOpen] = React.useState<string | null>(null);
-    // 5 Minute timer on the minute
-    const fiveMinuteClock = useFiveMinuteClock();
-    // Save to localStorage whenever reminders change
-    React.useEffect(() => {
-        localStorage.setItem('reminders', JSON.stringify(reminders));
-    }, [reminders]);
     // Update a reminder
     const updateReminder = (id: string, fields: Partial<ReminderType>) => {
         setReminders((prev) =>
