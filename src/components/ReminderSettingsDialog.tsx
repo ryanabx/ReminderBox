@@ -1,9 +1,9 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, FormGroup, InputLabel, MenuItem, Select, Stack, TextField, Typography } from '@mui/material';
 import * as React from 'react';
-import type { ReminderType } from '../pages/ReminderPage';
 import { DateTimePicker } from '@mui/x-date-pickers';
 import dayjs from 'dayjs';
 import utc from "dayjs/plugin/utc";
+import type { ReminderType } from '../effects/storage';
 
 dayjs.extend(utc);
 
